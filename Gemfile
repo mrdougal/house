@@ -39,4 +39,5 @@ gem "bson_ext", "1.0.4"
 
 group :development, :test do
   gem "rspec-rails", ">= 2.0.0.beta.22"
+  gem "autotest"
 end
