@@ -1,0 +1,11 @@
+h1. House an asset management application
+
+We are using some of the built in technologies of Mac OS X
+
+* Quicklook to create previews of assets
+* Spotlight to extract metadata
+* SIPS (Scriptable image processor) to create thumbnails of asset preview
+
+
+Where feasible we have tried to use built in technologies to reduce the reliance of third party libraries. Additionally *most* of the built in libraries/tools are heavily optimised for hte hardware they run on. (and so are *very* fast)
+
