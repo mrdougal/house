@@ -38,6 +38,16 @@ gem "bson_ext", "1.0.4"
 # without having to type RAILS_ENV=test.
 
 group :development, :test do
+  
   gem "rspec-rails", ">= 2.0.0.beta.22"
-  gem "autotest"
+
+  # # Zen test suite
+  # gem "autotest-rails", "4.1.0"
+  # gem "autotest-fsevent", "0.1.1"
+  # gem "autotest-growl", "0.2.0"
+  # 
+  # Above gem doesn't work right now, but i've included as *i want it to work*
+  
+  gem 'factory_girl_rails'
+  
 end
