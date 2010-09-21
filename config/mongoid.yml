@@ -1,0 +1,39 @@
+
+# Default values as described http://mongoid.org/docs/installation/
+# 
+#     autocreate_indexes: false
+#     allow_dynamic_fields: true
+#     include_root_in_json: false
+#     parameterize_keys: true
+#     persist_in_safe_mode: false
+#     raise_not_found_error: true
+#     reconnect_time: 3
+# 
+# 2010-09-21
+# For now the defaults are fine
+
+
+defaults: &defaults
+  host: localhost
+  # slaves:
+  #   - host: slave1.local
+  #     port: 27018
+  #   - host: slave2.local
+  #     port: 27019
+
+development:
+  <<: *defaults
+  database: house_development
+
+test:
+  <<: *defaults
+  database: house_test
+
+# set these environment variables on your prod server
+production:
+  <<: *defaults
+  host: <%= ENV['MONGOID_HOST'] %>
+  port: <%= ENV['MONGOID_PORT'] %>
+  username: <%= ENV['MONGOID_USERNAME'] %>
+  password: <%= ENV['MONGOID_PASSWORD'] %>
+  database: <%= ENV['MONGOID_DATABASE'] %>
