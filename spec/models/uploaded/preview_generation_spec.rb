@@ -51,7 +51,6 @@ describe "Preview generation" do
       end
       
     end
-    
   end
   
   

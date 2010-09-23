@@ -1,0 +1,10 @@
+
+Uploaded files
+
+We need to have a callback, so if archived files are uploaded. 
+We need to prompt the user if they want to extract the contents of the archive.
+
+There are a number of points to be aware of.
+Older versions of iWork documents are zipped by Safari prior to uploading.
+
+

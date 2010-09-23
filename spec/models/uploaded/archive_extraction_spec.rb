@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Extraction of archives" do
+describe "Archive Extraction" do
   
   
   shared_examples_for 'common archive behaviour' do
