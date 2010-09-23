@@ -6,6 +6,9 @@ require 'rspec/rails'
 # Factory girl
 require File.dirname(__FILE__) + "/factory_helper"
 
+# Helper methods for assets
+require File.dirname(__FILE__) + "/asset_helper"
+
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -29,3 +32,6 @@ RSpec.configure do |config|
   # instead of true.
   # config.use_transactional_fixtures = true
 end
+
+
+
