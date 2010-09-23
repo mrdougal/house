@@ -50,4 +50,7 @@ group :development, :test do
   
   gem 'factory_girl_rails'
   
+  # Required so that Rspec can test views
+  gem 'webrat'
+  
 end
