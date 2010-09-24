@@ -3,7 +3,7 @@
 require 'pathname'
 
 
-module Uploaded
+module Upload
   class SanitisedFile
 
 

@@ -6,43 +6,68 @@ class Asset
   
   
   include Mongoid::Document
+  include Upload::Common
   
   field :name
-  field :size
+  field :original_filename   # filename
+  field :size  # filesize in bytes
   
-  field :file
+  field :preview_generated_at, :type => DateTime
   
-  def to_s
-    'file'
-  end
+  attr_accessor :file
   
-  # def file
-  #   
-  # end
-  
-  def file=(new_file)
-    
-    @file
-    
-    if new_file and new_file.respond_to?(:original_filename)
-      self[:file] = new_file.original_filename
-    else
-      
-      'cheese'
-    end
-    # self[:file] = new_file.path
+  def file=(file)
+    self.file = file
   end
   
   
+  def basename
+    original_name
+  end
+  
+  alias :name :basename
+  
+  def original_name
+    'example.psd'
+  end
+  
+  def format
+    'psd'
+  end
+  
+  alias :extension :format
+
+  
+  # This is so methods can be shared between thumbs, previews and the original
+  def parent
+    self
+  end
+  
+  def preview
+    @preview ||= Preview.new(self) if has_preview?
+  end
+  
+  def has_preview?
+    !!preview_generated_at
+  end
+
+  def thumbnails
+    return unless has_preview?
+    
+    @thumbnails ||= ThumbnailSet.new(self, {
+      :small  => { :size => '40x40' },
+      :medium => { :size => '150x150' },
+      :large  => { :size => '800x800', :format => :jpg }
+    })
+    
+  end
+  
+
   
   private
   
-  def original_filename(new_file)
-    if new_file and new_file.respond_to?(:original_filename)
-      new_file.original_filename
-    elsif path
-      File.basename(path)
-    end
+  def ok_to_process?
+    valid?
   end
   
 end
