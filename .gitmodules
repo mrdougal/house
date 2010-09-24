@@ -1,0 +1,3 @@
+[submodule "spec/fixtures/assets"]
+	path = spec/fixtures/assets
+	url = git@github.com:dougalmacpherson/house-assets.git

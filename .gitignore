@@ -3,6 +3,7 @@ db/*.sqlite3
 log/*.log
 tmp/**/*
 
+uploads/*
 
 # Mac specific
 .DS_Store

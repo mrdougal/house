@@ -6,6 +6,9 @@ require 'rspec/rails'
 # Factory girl helpers
 require File.dirname(__FILE__) + "/factory_helper"
 
+# Asset helpers
+require File.dirname(__FILE__) + "/uploader_helper"
+
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
