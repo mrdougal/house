@@ -24,7 +24,7 @@ describe "Asset Thumbnails" do
     end
     
     it "should have a url underneath the parent" do
-      @thumb.url.should == ''
+      @thumb.url.should == @thumb.parent.url
     end
     
     it "should not say it's an original" do

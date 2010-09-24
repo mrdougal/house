@@ -48,22 +48,23 @@ module Upload
 
 
       def path
-        File.join Rails.root,'uploads', parent_class_name, id_partition, base_dir, basename
+        File.expand_path File.join(Rails.root,'uploads', parent_class_name, id_partition, version_dir, basename)
       end
 
       def url
-        File.join '', 'uploads', parent_class_name, id.to_s, base_dir, basename
+        File.join '', 'uploads', parent_class_name, id.to_s, version_dir, basename
       end
       
       
       
       private
-
+      
+      
       def parent_class_name
         parent.class.name.downcase.pluralize
       end
       
-      def base_dir
+      def version_dir
         original? ? 'original' : 'thumbs'
       end
       

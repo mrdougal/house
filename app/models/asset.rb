@@ -14,11 +14,25 @@ class Asset
   
   field :preview_generated_at, :type => DateTime
   
-  attr_accessor :file
   
-  def file=(file)
-    self.file = file
-  end
+  
+  attr_accessor :file
+  validate :check_have_file
+  # validates_presence_of :file, :on => :create, :message => "needs to be uploaded"
+  
+  
+  # Callbacks
+  after_create :store!
+
+
+
+
+  
+  
+  # # This is where the file (from the filesystem) is assigned to the record
+  # def file=(file)
+  #   self.file = file
+  # end
   
   
   def basename
@@ -36,6 +50,32 @@ class Asset
   end
   
   alias :extension :format
+
+
+
+  # Typically 'process!' will be called outside outside 
+  # of the request responce cycle eg: via delayed job
+  #
+  # Or optionally the asset may be indexed
+  def process!
+    
+  end
+
+
+
+  # Create our path to where we need to be stored
+  def store!
+    
+    # @file.close
+    
+    # Construct the path in the filesystem
+    FileUtils.mkdir_p(File.dirname(path))
+    FileUtils.mv(file.path, path)
+    FileUtils.chmod(0644, path)
+    
+  end
+
+
 
   
   # This is so methods can be shared between thumbs, previews and the original
@@ -65,6 +105,11 @@ class Asset
 
   
   private
+  
+  def check_have_file
+    
+    errors.add(:file, 'You need to upload a file') if self.file.nil?
+  end
   
   def ok_to_process?
     valid?
