@@ -70,7 +70,7 @@ class Asset
     
     # Construct the path in the filesystem
     FileUtils.mkdir_p(File.dirname(path))
-    FileUtils.mv(file.path, path)
+    FileUtils.mv(file, path)
     FileUtils.chmod(0644, path)
     
   end
