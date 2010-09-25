@@ -40,9 +40,13 @@ module Upload
       # 4c30/0ae9/a2d8/e1b2/4400/0002 for an id of 4c300ae9a2d8e1b244000002
       def id_partition
 
-        val                = parent._id.to_s
+        val                = id
         val                = (val.length < 9) ? ("%09d" % val ) : val
         val.scan(/(....)/).join("/")
+      end
+      
+      def id
+        parent._id.to_s
       end
       
 
@@ -52,7 +56,7 @@ module Upload
       end
 
       def url
-        File.join '', 'uploads', parent_class_name, id.to_s, version_dir, basename
+        File.join '', 'uploads', parent_class_name, id, version_dir, basename
       end
       
       

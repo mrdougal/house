@@ -28,10 +28,7 @@ class Thumbnail
     @format = :png if @format.nil?
   end
   
-  def basename
-    
-    "#{@name}.#{format}"
-  end
+
   
   
   
