@@ -16,8 +16,15 @@ class Preview
     end
     
     def name
-      'preview.png'
+      'preview'
     end
+    
+    
+    def format
+      :png
+    end
+    
+    
     
 
     

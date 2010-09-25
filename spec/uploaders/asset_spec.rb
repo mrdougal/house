@@ -57,24 +57,7 @@ describe "Asset" do
       @asset.thumbnails.should_not be_empty
     end
   
-  
-    # describe "Preview" do
-    # 
-    #   before(:each) do
-    #     @file = @asset.preview
-    #   end
-    # 
-    #   it_should_behave_like 'all valid files'
-    # 
-    #   it "should have a parent" do
-    #     @file.parent.should == @asset
-    #   end
-    # 
-    #   it "should have thumbnails" do
-    #     @file.thumbnails.should == @asset.thumbnails
-    #   end
-    # 
-    # end
+
   
   end
   
