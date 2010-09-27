@@ -54,6 +54,7 @@ GEM
       mongo (= 1.0.7)
       tzinfo (~> 0.3.22)
       will_paginate (~> 3.0.pre)
+    nokogiri (1.4.3.1)
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.13)
@@ -90,6 +91,10 @@ GEM
     treetop (1.4.8)
       polyglot (>= 0.3.1)
     tzinfo (0.3.23)
+    webrat (0.7.1)
+      nokogiri (>= 1.2.0)
+      rack (>= 1.0)
+      rack-test (>= 0.5.3)
     will_paginate (3.0.pre2)
 
 PLATFORMS
@@ -101,3 +106,4 @@ DEPENDENCIES
   mongoid (= 2.0.0.beta.17)
   rails (= 3.0.0)
   rspec-rails (>= 2.0.0.beta.22)
+  webrat
