@@ -50,13 +50,6 @@ describe "Asset Thumbnails" do
     
     end
     
-    it "should have a parent_class_name" do
-      @thumb.parent_class_name.should == 'assets'
-    end
-  
-    it "should have a parent_class_name" do
-      @thumb.parent_class_name.should == 'assets'
-    end
   
     it "should have the same id as it's parent" do
       @thumb.id.should == @asset.id
