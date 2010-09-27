@@ -9,22 +9,11 @@ module Upload
     module InstanceMethods
       
       
-      def name
-        @name.to_s
-      end
-
       def basename
         "#{name}.#{format}"
       end
       
-      def extension
-        format
-      end
-      
-      def size
-        100
-      end
-      
+
       # BSON ObjectID Specification which is our primary key
       # A BSON ObjectID is a 12-byte value consisting of 
       # * 4-byte timestamp (seconds since epoch), 
@@ -46,7 +35,7 @@ module Upload
       end
       
       def id
-        parent._id.to_s
+        self.parent._id.to_s
       end
       
 
@@ -61,11 +50,11 @@ module Upload
       
       
       
-      private
+      # private
       
       
       def parent_class_name
-        parent.class.name.downcase.pluralize
+        self.parent.class.name.downcase.pluralize
       end
       
       def version_dir
@@ -73,7 +62,7 @@ module Upload
       end
       
       def original?
-        parent == self
+        self.parent == self
       end
 
     end

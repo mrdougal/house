@@ -18,11 +18,11 @@ class Asset
   
   attr_accessor :file
   # validate :check_have_file
-  # validates_presence_of :file, :on => :create, :message => "needs to be uploaded"
+  validates_presence_of :file, :on => :create, :message => "needs to be uploaded"
   
   
   # Callbacks
-  # after_create :store!
+  after_create :store!
 
 
 

@@ -7,7 +7,7 @@ describe "Thumbnail set" do
   before(:each) do
     
     
-    @asset = Factory :asset
+    @asset = Factory :asset, :file => get_fixture(images.first) 
     @definition = {
       :small  => { :size => '40x40' },
       :medium => { :size => '150x150' },

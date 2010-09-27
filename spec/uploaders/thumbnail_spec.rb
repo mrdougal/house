@@ -4,12 +4,12 @@ require "spec_helper"
 describe "Asset Thumbnails" do
   
   before(:each) do
-    @asset = Factory :processed_asset
+    @asset = Factory :processed_asset, :file => get_fixture('images/image.jpg')
   end      
 
 
   shared_examples_for 'all thumbnails' do
-  
+
     it "should have a parent" do
       @thumb.parent.should == @asset
     end
@@ -17,20 +17,54 @@ describe "Asset Thumbnails" do
     it "should have a preview" do
       @thumb.preview.should == @asset.preview
     end
+  
+    describe "url" do
+
+      it "should not be blank" do
+        @thumb.url.should_not be_blank
+      end
+
+      it "should contain the parent id" do
+        @thumb.url.should =~ /#{@asset.id}/
+      end
+
+      it "should contain the thumbs dir" do
+        @thumb.url.should =~ /thumbs/
+      end
     
+    end
+
+    describe "path" do
+
+      it "should not be blank" do
+        @thumb.path.should_not be_blank
+      end
+
+      it "should contain the parent id_partition" do
+        @thumb.path.should =~ /#{@asset.id_partition}/
+      end
+
+      it "should contain the thumbs dir" do
+        @thumb.path.should =~ /thumbs/
+      end
     
-    it "should have a path underneath the parent" do
-      @thumb.path.should == @thumb.parent.path
     end
     
-    it "should have a url underneath the parent" do
-      @thumb.url.should == @thumb.parent.url
+    it "should have a parent_class_name" do
+      @thumb.parent_class_name.should == 'assets'
+    end
+  
+    it "should have a parent_class_name" do
+      @thumb.parent_class_name.should == 'assets'
+    end
+  
+    it "should have the same id as it's parent" do
+      @thumb.id.should == @asset.id
     end
     
     it "should not say it's an original" do
       @thumb.should_not be_original
     end
-    
 
   end  
   
