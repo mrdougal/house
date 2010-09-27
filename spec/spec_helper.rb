@@ -3,11 +3,9 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
-# Factory girl helpers
+# Factory girl and asset helpers
 require File.dirname(__FILE__) + "/factory_helper"
-
-# Asset helpers
-require File.dirname(__FILE__) + "/uploader_helper"
+require File.dirname(__FILE__) + "/factory_assets_helper"
 
 
 # Requires supporting ruby files with custom matchers and macros, etc,

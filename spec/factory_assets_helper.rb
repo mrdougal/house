@@ -3,22 +3,26 @@
 # 2010-09-24
 # Helper methods for testing uploading of the application
 
-def get_file(name)
+def get_fixture(n = nil)
   
-  fxtr_file = File.join(File.dirname(__FILE__), 'fixtures/assets', name)
-  tmp_file = File.expand_path("tmp/cache/assets/#{Time.now.to_i}/#{File.basename(name)}", )
-
-  FileUtils.mkdir_p(File.dirname(tmp_file))
-  FileUtils.cp(fxtr_file, tmp_file)
+  # Assign a random file, if no name was provided
+  n = all_files.shuffle.first if n.nil?
   
+  puts "Using #{n} as an asset"
+  
+  # The n will most likely be passed in with a path (or part of one)
+  f_name = File.basename(n)
+  f_path = File.join(File.dirname(__FILE__), 'fixtures/assets', n)
+  
+  
+  tmp_file = Tempfile.new(f_path)
+  # We need to mock the method orginal_filename
+  # as :original_filename is a Rails extension on Tempfile
+  tmp_file.stub(:original_filename).and_return(f_name)
   tmp_file
+
   
 end
-
-# def file_path( *paths )
-#   File.expand_path(File.join(File.dirname(__FILE__), 'fixtures', *paths))
-# end
-
 
 
 
