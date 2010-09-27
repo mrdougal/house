@@ -2,7 +2,6 @@
 
   Factory.define :asset do |f|
 
-    f.file { get_file(images.first) }
   end
 
   Factory.define :processed_asset, :parent => :asset  do |f|
