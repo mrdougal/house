@@ -39,7 +39,7 @@ gem "bson_ext", "1.0.4"
 
 group :development, :test do
   
-  gem "rspec-rails", ">= 2.0.0.beta.22"
+  gem "rspec-rails", ">= 2.0.0.rc"
 
   # # Zen test suite
   # gem "autotest-rails", "4.1.0"
@@ -51,6 +51,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   
   # Required so that Rspec can test views
-  gem 'webrat'
+  # gem 'webrat'
   
 end
