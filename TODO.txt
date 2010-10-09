@@ -1,0 +1,29 @@
+
+
+
+Add in a run command for calling external commands
+mainly
+* unzip : for archives
+* clipper : for previews
+* sips : for thumbnails
+
+
+All of these utilities should be installed in a location visible to the app (Rails.root)
+
+
+
+Callbacks for asset
+
+after_save
+	- copy to filesystem
+	
+before_process
+	- extract_archive! (archive)
+
+process
+	- extract_metadata
+	- extract_preview
+	- create_thumbnail
+	
+after_process
+	- notify?
