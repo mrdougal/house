@@ -8,3 +8,7 @@ tmp/**/*
 # Mac specific
 .DS_Store
 *.tmproj
+
+# For rvm gemsets
+# May not be applicable on other machines, therefore we'll ignore
+.rvmrc
