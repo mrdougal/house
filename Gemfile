@@ -6,8 +6,9 @@ gem 'rails', '3.0.0'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # We are using MongoDB for our database and MongoID as our ORM
-gem "mongoid", "2.0.0.beta.17"
-gem "bson_ext", "1.0.4"
+# Need to make sure that mongo and bson are the same
+gem "mongoid", "2.0.0.beta.19"
+gem "bson_ext" #, "1.0.4"
 
 
 # Use unicorn as the web server
@@ -39,7 +40,7 @@ gem "bson_ext", "1.0.4"
 
 group :development, :test do
   
-  gem "rspec-rails", ">= 2.0.0.beta.22"
+  gem "rspec-rails", ">= 2.0.0"
 
   # # Zen test suite
   # gem "autotest-rails", "4.1.0"
@@ -51,6 +52,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   
   # Required so that Rspec can test views
-  gem 'webrat'
+  # gem 'webrat'
   
 end
