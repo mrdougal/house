@@ -1,6 +1,10 @@
 .bundle
 db/*.sqlite3
 log/*.log
+
+# Ignoring everything in tmp
+# As standalone passenger writes tmp/restart.txt (which we don't need)
+tmp/*
 tmp/**/*
 
 uploads/*
@@ -8,3 +12,6 @@ uploads/*
 # Mac specific
 .DS_Store
 *.tmproj
+
+# Ruby version manager
+.rvmrc
