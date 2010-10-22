@@ -39,7 +39,7 @@ gem "bson_ext", "1.0.4"
 
 group :development, :test do
   
-  gem "rspec-rails", ">= 2.0.0.rc"
+  gem "rspec-rails", ">= 2.0.0"
 
   # # Zen test suite
   # gem "autotest-rails", "4.1.0"
