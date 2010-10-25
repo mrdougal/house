@@ -3,7 +3,8 @@ require 'spec_helper'
 describe Asset do
 
 
-  [images, composite].flatten.each do |val|
+  # [images, composite].flatten.each do |val|
+  images.flatten.each do |val|
 
     describe "Creation of asset #{val}" do
 
@@ -15,25 +16,43 @@ describe Asset do
       it "should be valid" do
         @asset.should be_valid
       end
-
-      it "should have a basename of #{@f}" do
-        @asset.basename.should == @f
+      
+      describe "filesize" do
+        
+        it "should not be zero" do
+          @asset.original_filesize.should_not be_zero
+        end
+      
+        it "should be same as the fixture" do
+        
+          f = File.join(File.dirname(__FILE__), '../fixtures/assets', val)
+          @asset.original_filesize.should == File.size(f)
+        end
       end
+      
 
-      it "should have a filesize" do
-        @asset.original_filesize.should_not be_zero
-      end
+      describe "name" do
+        
+        it "should have a basename of #{File.basename(val)}" do
+          @asset.basename.should == File.basename(val)
+        end
+      
+        it "should have an 'original filename of #{File.basename(val)}" do
+          @asset.original_filename.should == File.basename(val)        
+        end
 
-      it "should respond to name" do
-        @asset.should respond_to(:name)
-      end
+        it "should respond to name" do
+          @asset.should respond_to(:name)
+        end
 
-      it "should return '#{@f}' as it's" do
-        @asset.name.should == File.basename(val)
-      end
+        it "should return '#{File.basename(val)}' as it's basename" do
+          @asset.name.should == File.basename(val)
+        end
 
-      it "should return '#{@f}' from to_s" do
-        @asset.to_s.should == @f
+        it "should return '#{File.basename(val)}' from to_s" do
+          @asset.to_s.should == File.basename(val)
+        end
+        
       end
 
       describe "adding in name" do

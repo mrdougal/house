@@ -13,16 +13,22 @@ def get_fixture(n = nil)
   # The n will most likely be passed in with a path (or part of one)
   f_name = File.basename(n)
   f_path = File.join(File.dirname(__FILE__), 'fixtures/assets', n)
+  f_contents = File.read(f_path)
 
   # Duplicate the contents of the requested file into a tempfile
   # Granted this is all in Ruby, so it's not the fastest but since 
   # this is only for testing it should be ok…
   tmp_file = Tempfile.new(f_name)
-  tmp_file.write(File.read(f_path))
-  
+
   # We need to mock the method orginal_filename
   # as :original_filename is a Rails extension on Tempfile
   tmp_file.stub(:original_filename).and_return(f_name)
+  tmp_file.binmode
+  tmp_file.write(f_contents)
+  tmp_file.rewind
+  
+  puts("file size = #{File.size(tmp_file.path)}")
+
   tmp_file
 
   

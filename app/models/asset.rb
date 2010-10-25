@@ -40,12 +40,13 @@ class Asset
   def file=(file)
   
     @file = file
-  
+    
+    # Set the size of the file
+    self.original_filesize = get_filesize
+
     # Set the original_filename
     self.original_filename = get_original_filename
   
-    # Set the size of the file
-    self.original_filesize = get_filesize
   end
   
   # alias :size :original_filesize
@@ -89,7 +90,7 @@ class Asset
     return unless file?
 
     # get the size of the file
-    File.size(file) 
+    File.size(file.path) 
 
   end
 
@@ -102,8 +103,10 @@ class Asset
   def check_file
     
     if file?
+      
       # Add errors if the file is empty
-      # errors.add(:file, 'was zero bytes') if File.size(file).zero?
+      errors.add(:file, 'was zero bytes') if File.size(file).zero?
+      
     else
       # Add error if there is no file
       errors.add(:file, 'You need to upload a file') unless file?
