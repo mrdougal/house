@@ -1,4 +1,7 @@
 class AssetsController < ApplicationController
+  
+  before_filter :get_asset, :only => [:update, :show, :edit, :destroy]
+  
   # GET /assets
   # GET /assets.xml
   def index
@@ -13,7 +16,6 @@ class AssetsController < ApplicationController
   # GET /assets/1
   # GET /assets/1.xml
   def show
-    @asset = Asset.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,7 +36,6 @@ class AssetsController < ApplicationController
 
   # GET /assets/1/edit
   def edit
-    @asset = Asset.find(params[:id])
   end
 
   # POST /assets
@@ -56,7 +57,6 @@ class AssetsController < ApplicationController
   # PUT /assets/1
   # PUT /assets/1.xml
   def update
-    @asset = Asset.find(params[:id])
 
     respond_to do |format|
       if @asset.update_attributes(params[:asset])
@@ -72,7 +72,6 @@ class AssetsController < ApplicationController
   # DELETE /assets/1
   # DELETE /assets/1.xml
   def destroy
-    @asset = Asset.find(params[:id])
     @asset.destroy
 
     respond_to do |format|
@@ -80,4 +79,11 @@ class AssetsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  private
+  
+  def get_asset
+    @asset = Asset.find(params[:id])
+  end
+  
 end
