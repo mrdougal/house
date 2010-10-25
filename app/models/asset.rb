@@ -11,13 +11,10 @@ class Asset
   
   
   field :name
-  field :original_filename                        # filename
+  field :original_filename  # filename
   field :original_filesize, :type => Integer, :default => 0    # filesize in bytes
   
   field :preview_generated_at, :type => DateTime
-  
-  # attr_accessor :file
-  # validates_presence_of :file, :on => :create, :message => "is required" 
   
   validate :check_file
   
@@ -106,7 +103,7 @@ class Asset
     
     if file?
       # Add errors if the file is empty
-      errors.add(:file, 'was zero bytes') if File.size(file).zero?
+      # errors.add(:file, 'was zero bytes') if File.size(file).zero?
     else
       # Add error if there is no file
       errors.add(:file, 'You need to upload a file') unless file?
