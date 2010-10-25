@@ -34,17 +34,11 @@ module Upload
       # 4c30/0ae9/a2d8/e1b2/4400/0002 for an id of 4c300ae9a2d8e1b244000002
       def id_partition
 
-        val                = id
+        val                = parent_id
         val                = (val.length < 9) ? ("%09d" % val ) : val
         val.scan(/(....)/).join("/")
       end
       
-      
-      # A shortcut method, where we call the parent id and then to s
-      # as the parent id is a BSON object and will error unless you explictly call to_s
-      def id
-        self.parent._id.to_s
-      end
       
 
       # The path to our asset on the filesystem.
@@ -62,13 +56,19 @@ module Upload
       # the resource prior to serving them the file.
       # Additionally it means that we can 'force' user agents to download original assets (when requested)
       def url
-        File.join '', 'uploads', parent_class_name, id, version_dir, basename
+        File.join '', 'uploads', parent_class_name, parent_id, version_dir, basename
       end
       
       
       
       private
       
+      
+      # A shortcut method, where we call the parent id and then to s
+      # as the parent id is a BSON object and will error unless you explictly call to_s
+      def parent_id
+        self.parent._id.to_s
+      end
       
       # Returns the name of the parent's name. In our case this isn't really going to change
       # I've included it in here as it's effectively a shortcut, as the url and path methods both call this
