@@ -1,0 +1,81 @@
+/* @override 
+	http://house.local/stylesheets/house.css?1287442242
+	http://house.local/stylesheets/03-house.css?1287983660
+*/
+
+html { background-color: #d2d6db; color: #333;
+	padding: 20px;
+	font: 12pt "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+
+.wrapper {
+	background-color: #fff;
+}
+
+/* @group anchors */
+
+a { color: #d51716;
+	text-decoration: none;
+}
+
+a:visited { color: #691c22; }
+a:hover { color: #ff491d; }
+
+
+
+/* @end */
+
+/* @group forms */
+
+div.fields, div.actions {
+  margin-bottom: 10px;
+}
+
+#notice {
+  color: green;
+}
+
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom: 0px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+label {
+	display: block;
+	clear: both;
+	margin-top: 10px;
+}
+
+.actions input[type=submit] {
+	padding: 15px 15px 15px 25px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+/* @end */
