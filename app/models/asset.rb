@@ -16,7 +16,7 @@ class Asset
   
   field :preview_generated_at, :type => DateTime
   
-  validate :check_file
+  validate :check_file 
   
   
   # Callbacks
@@ -41,10 +41,8 @@ class Asset
   
     @file = file
     
-    # Set the size of the file
+    # Set the size and filename of the uploaded file
     self.original_filesize = get_filesize
-
-    # Set the original_filename
     self.original_filename = get_original_filename
   
   end
@@ -53,15 +51,17 @@ class Asset
   
   
   # Returns our original file
-  # TODO move path and url methods into this object
+  # 
+  # If the file is a new record and @file hasn't been set, then we have nothing to give them
+  # Otherwise we will return the file (which is the original)
+  #
   def file
-    @file
-    # return nil unless path
-    # File.new(path)
+    @file ||= new_record? ? nil : File.new(path, 'r')
   end
   
+  # Return boolean as to weither we have a file
   def file?
-    !!@file
+    !!file
   end
 
 
@@ -74,7 +74,6 @@ class Asset
 
   private
   
-  
   def get_original_filename
     
     # If file hasn't been set return nil
@@ -83,13 +82,11 @@ class Asset
     @file.respond_to?(:original_filename) ? @file.original_filename : File.basename(@file.path)
   end
 
-
   def get_filesize
-
-    # We need to have a file
+    
+    # We need to have a file to get the size of the file
     return unless file?
 
-    # get the size of the file
     File.size(file.path) 
 
   end
@@ -101,23 +98,38 @@ class Asset
   # Check to see if we have a file asssigned (which is a requirement)
   # and check that the file isn't zero bytes
   def check_file
+
+
+    # Don't do anything unless the file has changed
+    return unless file_has_changed?
     
     if file?
-      
+    
+      # We can only process files (objects that respond to path)
+      #
+      # 2010-10-25
+      # Raise a nasty error if our file object doesn't respond to path
+      raise "Wasn't passed an object that responds to path" unless file.respond_to? :path
+
       # Add errors if the file is empty
       errors.add(:file, 'was zero bytes') if File.size(file).zero?
       
     else
       # Add error if there is no file
-      errors.add(:file, 'You need to upload a file') unless file?
+      errors.add(:file, 'You need to upload a file')
     end
+  end
+  
+  # If *either* filename or size change, we consider the file to have changed
+  def file_has_changed?
+    original_filename_changed? or original_filesize_changed?
   end
   
 
   # Create our path to where we need to be stored, then move our file there
   def store!
     
-    raise "Unable to store the file" unless @file
+    raise "Unable to store the file" unless file
     
     # Construct the path in the filesystem
     FileUtils.mkdir_p(File.dirname(path))

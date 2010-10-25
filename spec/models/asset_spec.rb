@@ -3,7 +3,6 @@ require 'spec_helper'
 describe Asset do
 
 
-  # [images, composite].flatten.each do |val|
   images.flatten.each do |val|
 
     describe "Creation of asset #{val}" do
@@ -75,6 +74,7 @@ describe Asset do
 
 
   describe "Creation of asset with empty file" do
+
     before(:each) do
       @asset = Factory.build :asset, :file => get_fixture("zero-bytes.txt") 
       @asset.valid?
@@ -84,9 +84,12 @@ describe Asset do
       @asset.should_not be_valid
     end
 
-    it "should have errors on file" do
-      @asset.should have(1).error_on(:file)
-    end
+    # 2010-10-25
+    # TODO rspec isn't aware of 'error_on' method
+    #
+    # it "should have errors on file" do
+    #   @asset.should have(1).error_on(:file)
+    # end
 
     it "should have an error on :file, mentioning zero bytes" do
       @asset.errors[:file].to_s.should =~ /zero bytes/
@@ -119,10 +122,10 @@ describe Asset do
     # Have rewritten this test below
     # I assume that I've got a confussed copy of rspec installed
     #
-    it "should have at least one error on file" do
-      # error_on will call valid? internally
-      @asset.should have(1).errors_on(:file)
-    end
+    # it "should have at least one error on file" do
+    #   # error_on will call valid? internally
+    #   @asset.should have(1).errors_on(:file)
+    # end
 
     # This method does the same check as above
     # Although the above method is crashing rspec
@@ -133,27 +136,36 @@ describe Asset do
 
   end
 
-  describe "Updating an asset (without setting the file attribute)" do
-
+  describe "Updating an asset" do
+    
     before(:each) do
-      @asset = Factory.create :asset, :file => get_fixture("images/example.png") #, :new_record => false 
+      @asset = Factory.stub :asset, 
+        :original_filename => "example.png", 
+        :original_filesize => 10000,
+        :file => get_fixture('images/example.png')
     end
 
-    describe "updating name" do
-      before(:each) do
-        @asset.update :name => "Bacon"
-      end
-
-      it "should be valid" do
-        @asset.should be_valid
-      end
-
-      it "shouldn't effect the basename of the file" do
-        @asset.basename.should == 'example.png'
-      end
-
+    it "shouldn't be a new record" do
+      @asset.should_not be_new_record
     end
 
+    describe "without setting the file attribute" do
+      
+      describe "updating name" do
+        before(:each) do
+          @asset.update :name => "Bacon"
+        end
+
+        it "should be valid" do
+          @asset.should be_valid
+        end
+        
+        it "shouldn't effect the basename of the file" do
+          @asset.basename.should == 'example.png'
+        end
+
+      end
+    end
   end
 
 end
