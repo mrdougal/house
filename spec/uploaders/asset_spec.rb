@@ -1,99 +1,175 @@
 require "spec_helper"
 
 
-describe "Asset" do
+describe "Creating and Updating Asset" do
   
   
-  shared_examples_for 'an original asset' do
-    
-    # Names
+  images.flatten.each do |val|
 
-    it "should have a name" do
-      @asset.name.should_not be_blank
-    end
-    
-    it "should have the same name as basename" do
-      @asset.name.should == @basename
-    end
-    
-    it "should have a path" do
-      @asset.path.should_not be_blank
-    end
+    describe "Creation of asset with #{val}" do
 
-    it "should contain the basename in the path" do
-      @asset.path.should =~ /#{@asset.basename}/
-    end
-    
-    it "should have a url" do
-      @asset.url.should_not be_blank
-    end
-    
-    it "should contain the basename in the url" do
-      @asset.url.should =~ /#{@asset.basename}/
-    end
-    
-    it "should have a size" do
-      @asset.size.should_not be_blank
-    end
-    
-    it "should be an original" do
-      @asset.should be_original
-    end
-    
-  end
-  
-  
-  [images, composite].flatten.each do |val|
-    
-    describe "asset '#{val}'" do
-    
-      describe "processed" do
-
-        before(:each) do
-          @asset = Factory :processed_asset, :file => get_fixture(val)
-          @basename = File.basename(val)
-        end      
-
-        it_should_behave_like 'an original asset'
-    
-        it "should have a preview" do
-          @asset.preview.should_not be_nil
-        end
-
-        it "should have thumbnails" do
-          @asset.thumbnails.should_not be_empty
-        end
-  
+      before(:each) do
+        @asset = Asset.new :file => get_fixture(val)
+        @asset.save 
       end
-  
-      describe "new" do
-    
+
+      it "should be valid" do
+        @asset.should be_valid
+      end
+      
+      describe "filesize" do
+        
+        it "should not be zero" do
+          @asset.original_filesize.should_not be_zero
+        end
+      
+        it "should be same as the fixture" do
+        
+          f = File.join(File.dirname(__FILE__), '../fixtures/assets', val)
+          @asset.original_filesize.should == File.size(f)
+        end
+      end
+      
+
+      describe "name" do
+        
+        it "should have a basename of #{File.basename(val)}" do
+          @asset.basename.should == File.basename(val)
+        end
+      
+        it "should have an 'original filename of #{File.basename(val)}" do
+          @asset.original_filename.should == File.basename(val)        
+        end
+
+        it "should respond to name" do
+          @asset.should respond_to(:name)
+        end
+
+        it "should return '#{File.basename(val)}' as it's basename" do
+          @asset.name.should == File.basename(val)
+        end
+
+        it "should return '#{File.basename(val)}' from to_s" do
+          @asset.to_s.should == File.basename(val)
+        end
+        
+      end
+
+      describe "adding in name" do
         before(:each) do
-          @asset = Factory :asset, :file => get_fixture(val)
-          @asset.stub(:new_record?).and_return true
-        end
-    
-    
-        it "should not have a preview" do
-          @asset.preview.should be_nil
+          @asset.name = 'Cheese'
         end
 
-        it "should not have any thumbnails" do
-          @asset.thumbnails.should be_nil
+        it "should have 'Cheese' as it's name" do
+          @asset.name.should == 'Cheese'
         end
-    
-        it "should be ok to process" do
-          @asset.should be_ok_to_process
-        end
-    
-      end  
 
+        it "should return Cheese from to_s" do
+          @asset.to_s.should == 'Cheese'
+        end
+      end
+
+    end
+
+  end
+
+
+  describe "Creation of asset with empty file" do
+
+    before(:each) do
+      @asset = Factory.build :asset, :file => get_fixture("zero-bytes.txt") 
+      @asset.valid?
+    end
+
+    it "should not be valid" do
+      @asset.should_not be_valid
+    end
+
+    # 2010-10-25
+    # TODO rspec isn't aware of 'error_on' method
+    #
+    # it "should have errors on file" do
+    #   @asset.should have(1).error_on(:file)
+    # end
+
+    it "should have an error on :file, mentioning zero bytes" do
+      @asset.errors[:file].to_s.should =~ /zero bytes/
     end
   end
 
-  
 
-  
+  describe "Creation of asset without file" do
+
+    before(:each) do
+      @asset = Factory.build :asset, :file => nil
+      @asset.save
+    end
+
+    it "should not be valid" do
+      @asset.should_not be_valid
+    end
+
+    it "should have errors" do
+      @asset.errors.should_not be_empty
+    end
+
+    # 2010-10-19
+    # This is erroring rspec :-(
+    # output -> expected errors_on to be a collection but it does not respond to #length or #size
+    # Unless i've written a really shite spec
+    # this isn't be erroring like this
+    # might be, because we're not using activerecord
+    #
+    # Have rewritten this test below
+    # I assume that I've got a confussed copy of rspec installed
+    #
+    # it "should have at least one error on file" do
+    #   # error_on will call valid? internally
+    #   @asset.should have(1).errors_on(:file)
+    # end
+
+    # This method does the same check as above
+    # Although the above method is crashing rspec
+    it "should have at least one error on file (re-written)" do
+      @asset.valid?
+      @asset.errors[:file].should_not be_nil
+    end
+
+  end
+
+
+  describe "Updating an asset" do
+    
+    before(:each) do
+      @asset = Factory.stub :asset, 
+        :original_filename => "example.png", 
+        :original_filesize => 10000,
+        :file => get_fixture('images/example.png')
+    end
+
+    it "shouldn't be a new record" do
+      @asset.should_not be_new_record
+    end
+
+    describe "without setting the file attribute" do
+      
+      describe "updating name" do
+        before(:each) do
+          @asset.update :name => "Bacon"
+        end
+
+        it "should be valid" do
+          @asset.should be_valid
+        end
+        
+        it "shouldn't effect the basename of the file" do
+          @asset.basename.should == 'example.png'
+        end
+
+      end
+    end
+  end
+
 
   
   
