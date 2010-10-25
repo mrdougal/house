@@ -9,10 +9,7 @@ describe Asset do
 
       before(:each) do
         @asset = Asset.new :file => get_fixture(val)
-        @asset.save
-
-        # For reference in the tests, as 'val' includes a pathname
-        @f = File.basename(val)
+        @asset.save 
       end
 
       it "should be valid" do
