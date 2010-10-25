@@ -47,7 +47,7 @@ class Asset
   
   end
   
-  # alias :size :original_filesize
+  alias :size :original_filesize
   
   
   # Returns our original file
