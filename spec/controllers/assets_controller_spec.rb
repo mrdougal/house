@@ -122,4 +122,14 @@ describe AssetsController do
     end
   end
 
+  describe "GET preview" do
+    
+    it "should return the requested asset" do
+      
+      get :preview, :id => "1" 
+      response.should be_sucess
+    end
+    
+  end
+
 end

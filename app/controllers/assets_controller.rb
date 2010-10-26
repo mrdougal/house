@@ -82,14 +82,27 @@ class AssetsController < ApplicationController
   
   
   # GET /assets/1/preview
+  # GET /assets/1/preview.png
   #
-  # Check that the preview exits
+  # If the preview exists we send that down the pipe to the user
+  # otherwise we ask the preview model for a missing_path
+  # this will take into consideration if we haven't yet attempted to create an index
   def preview
-    
-    return :missing unless @asset.preview.exists?
 
-    # Send the file down the wire
-    send_file @asset.preview.path, :type => "image/png", :disposition => "inline"  
+    if @asset.preview.exists?
+
+      # We have an image to send down the pipe
+      file_path = @asset.preview.path
+    else
+      
+      # We don't have a file to send down the wire
+      # Either the preview hasn't been created yet, or we were unable to create one
+      file_path = @asset.preview.missing_path
+      
+    end
+
+    send_file file_path, :type => "image/png", :disposition => "inline"  
+    
   end
   
   

@@ -30,7 +30,7 @@ module Upload
       # Definition of the relationship from the preview to this class
       # TODO : This can be fixed up with an Association Proxy (like what rails uses)
       def preview
-        @preview ||= Preview.new(self) if has_preview?
+        @preview ||= Preview.new(self) #if has_preview?
       end
 
 
@@ -45,7 +45,8 @@ module Upload
       # Definition of the relationship between this class and thumbnails
       # TODO : This can be fixed up with an Association Proxy (like what rails uses)
       def thumbnails
-        return unless has_preview?
+
+        # return unless has_preview?
 
         @thumbnails ||= ThumbnailSet.new(self, {
           :small  => { :size => '40x40' },

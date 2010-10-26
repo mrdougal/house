@@ -8,7 +8,24 @@
 </head>
 <body>
 
-<%= yield %>
+	<div class="container_12">
+		
+		<%= yield :title %>
+
+		<div class="wrapper grid_9">
+			<!-- The main content in here -->
+			<%= yield %>
+		</div>
+		
+		<div class="grid_3">
+			<!-- Show options on the side -->
+			<%= yield :side %>
+		</div>
+	</div>
+	
+	<div class="clear" id="footer">
+		House 
+	</div>
 
 </body>
 </html>
