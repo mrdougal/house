@@ -39,36 +39,32 @@ module Upload
         val.scan(/(....)/).join("/")
       end
       
+      # See if the file exists on the filesystem
+      def exists?
+        File.exists?(path)
+      end
       
-
+      
       # The path to our asset on the filesystem.
       # Note that the path is split along many directories. 
       # This is so that we don't have many files stored in one directory
       # which can (and will) result in many issues
+      #
+      # This will return a path to where the file should be
+      # regardless to weither the file exists or not
       def path
         File.expand_path File.join(Rails.root,'uploads', parent_class_name, id_partition, version_dir, basename)
       end
 
-
-      # The url is less complicated as we don't need to split the id into many sections
-      # Additionally the assets will not be stored under the web servers document root
-      # This is so that we can run some checks to see if the user is allowed to see/download
-      # the resource prior to serving them the file.
-      # Additionally it means that we can 'force' user agents to download original assets (when requested)
-      def url
-        File.join '', 'uploads', parent_class_name, parent_id, version_dir, basename
-      end
-      
-      
-      
-      private
-      
-      
       # A shortcut method, where we call the parent id and then to s
       # as the parent id is a BSON object and will error unless you explictly call to_s
       def parent_id
         self.parent._id.to_s
       end
+      
+      
+      
+      private
       
       # Returns the name of the parent's name. In our case this isn't really going to change
       # I've included it in here as it's effectively a shortcut, as the url and path methods both call this

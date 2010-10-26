@@ -24,14 +24,6 @@ describe "Processed Asset" do
       @asset.path.should =~ /#{@asset.basename}/
     end
     
-    it "should have a url" do
-      @asset.url.should_not be_blank
-    end
-    
-    it "should contain the basename in the url" do
-      @asset.url.should =~ /#{@asset.basename}/
-    end
-    
     it "should have a size" do
       @asset.size.should_not be_blank
     end
@@ -74,12 +66,11 @@ describe "Processed Asset" do
           @asset = Factory :asset, :file => get_fixture(val)
           @asset.stub(:new_record?).and_return true
         end
-    
-    
-        it "should not have a preview" do
-          @asset.preview.should be_nil
+          
+        it "should have a preview" do
+          @asset.preview.should be_instance_of(Preview)
         end
-
+        
         it "should not have any thumbnails" do
           @asset.thumbnails.should be_nil
         end
