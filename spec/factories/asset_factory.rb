@@ -1,6 +1,8 @@
 
 
   Factory.define :asset do |f|
+    
+    f.file { get_fixture("images/example.jpg") }
 
   end
 
