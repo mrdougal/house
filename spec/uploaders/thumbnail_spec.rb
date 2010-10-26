@@ -4,7 +4,7 @@ require "spec_helper"
 describe "Asset Thumbnails" do
   
   before(:each) do
-    @asset = Factory :processed_asset, :file => get_fixture('images/image.jpg')
+    @asset = Factory :processed_asset, :file => get_fixture('images/example.jpg')
   end      
 
 
@@ -18,21 +18,6 @@ describe "Asset Thumbnails" do
       @thumb.preview.should == @asset.preview
     end
   
-    describe "url" do
-
-      it "should not be blank" do
-        @thumb.url.should_not be_blank
-      end
-
-      it "should contain the parent id" do
-        @thumb.url.should =~ /#{@asset.id}/
-      end
-
-      it "should contain the thumbs dir" do
-        @thumb.url.should =~ /thumbs/
-      end
-    
-    end
 
     describe "path" do
 
@@ -52,7 +37,7 @@ describe "Asset Thumbnails" do
     
   
     it "should have the same id as it's parent" do
-      @thumb.id.should == @asset.id
+      @thumb.parent_id.should == @asset.parent_id
     end
     
     it "should not say it's an original" do
