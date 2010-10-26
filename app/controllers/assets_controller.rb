@@ -1,6 +1,6 @@
 class AssetsController < ApplicationController
   
-  before_filter :get_asset, :only => [:update, :show, :edit, :destroy]
+  before_filter :get_asset, :only => [:update, :show, :edit, :destroy, :preview]
   
   # GET /assets
   # GET /assets.xml
@@ -79,6 +79,19 @@ class AssetsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  
+  # GET /assets/1/preview
+  #
+  # Check that the preview exits
+  def preview
+    
+    return :missing unless @asset.preview.exists?
+
+    # Send the file down the wire
+    send_file @asset.preview.path, :type => "image/png", :disposition => "inline"  
+  end
+  
   
   private
   
