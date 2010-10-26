@@ -1,0 +1,12 @@
+
+<table border="0" cellspacing="0" class="metadata">
+	<tr>
+		<td class="name">size</td>
+		<td class="value"><%= number_to_human_size @asset.size %></td>
+	</tr>
+	
+	<tr>
+		<td class="name">Uploaded</td>
+		<td class="value"><%= time_ago_in_words @asset.created_at %> ago</td>
+	</tr>
+</table>

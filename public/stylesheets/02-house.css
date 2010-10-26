@@ -1,0 +1,244 @@
+/* @override 
+	http://house.local/stylesheets/house.css?1287442242
+	http://house.local/stylesheets/03-house.css?1287983660
+	http://house.local/stylesheets/02-house.css?1287984937
+	http://house.local/stylesheets/02-house.css?1288069627
+	http://house.local/stylesheets/02-house.css?1288070535
+	http://house.local/stylesheets/02-house.css?1288073394
+	http://house.local/stylesheets/02-house.css?1288073424
+*/
+
+html { background-color: #d2d6db; color: #333;
+	padding: 0;
+	font: 10pt "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+
+body {
+	min-width: 600px;
+}
+
+/* @group anchors */
+
+a { color: #d51716;
+	text-decoration: none;
+}
+
+a:visited { color: #691c22; }
+a:hover { color: #ff491d; }
+
+
+
+/* @end */
+
+/* @group forms */
+
+div.fields, div.actions {
+  margin-bottom: 10px;
+}
+
+#notice {
+  color: green;
+}
+
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom: 0px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#error_explanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+label {
+	display: block;
+	clear: both;
+	margin-top: 10px;
+}
+
+.actions input[type=submit] {
+	padding: 15px 15px 15px 25px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+/* @end */
+
+/* @group nav */
+
+nav {
+	background-color: rgba(137,140,143,0.5);
+	padding: 10px 20px;
+}
+
+nav a {
+	float: left;
+	background-color: #d2d6db;
+	padding: 10px;
+	margin-top: -10px;
+}
+
+/* @end */
+
+/* @group thumbs */
+
+.thumb {
+	float: left;
+	width: 130px;
+	background-color: #fff;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+
+.thumb img {
+	width: 100px;
+	float: left;
+	overflow: hidden;
+	height: 100px;
+}
+
+.thumb .name {
+	text-align: center;
+	display: block;
+	clear: both;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+
+
+/* @end */
+
+/* @group assets */
+
+ol.assets {
+	list-style-type: none;
+}
+
+
+
+/* @end */
+
+aside {
+	float: right;
+	display: block;
+	min-width: 150px;
+	width: 25%;
+	margin-bottom: 10px;
+}
+
+#core {
+	width: 70%;
+	float: left;
+	margin-bottom: 10px;
+}
+
+footer {
+	display: block;
+	clear: both;
+	color: #808284;
+	border-top: 1px dashed rgba(145,145,145,0.5);
+}
+
+.wrapper {
+	padding: 20px;
+}
+
+.flash {
+	margin-bottom: -10px;
+}
+
+/* @group crud */
+
+.crud a {
+	font-weight: normal;
+	font-style: normal;
+	background-position: 0 center;
+	text-decoration: none;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	clear: both;
+	display: block;
+	padding-left: 20px;
+}
+
+a.new {
+	background: url(/images/icons/new.png) no-repeat left center;
+}
+
+a.edit {
+	background: url(/images/icons/edit.png) no-repeat left center;
+}
+
+a.delete {
+	background: url(/images/icons/delete.png) no-repeat left center;
+}
+
+a.show {
+	background: url(/images/icons/show.png) no-repeat left center;
+}
+
+a.index {
+	background: url(/images/icons/index.png) no-repeat left center;
+}
+
+.account a.show {
+	background: url(/images/icons/account.png) no-repeat left center;
+}
+
+.carton a.show {
+	background: url(/images/icons/carton.png) no-repeat left center;
+}
+
+.bottle a.show {
+	background: url(/images/icons/bottle_small.gif) no-repeat left center;
+}
+
+
+
+/* @end */
+
+/* @group metadata */
+
+.metadata {
+	list-style-type: none;
+	margin-bottom: 10px;
+}
+
+.metadata td {
+	text-align: left;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-right: 10px;
+}
+
+.metadata .name {
+	font-weight: bold;
+	width: 30%;
+}
+
+
+
+/* @end */

@@ -45,7 +45,7 @@ class AssetsController < ApplicationController
 
     respond_to do |format|
       if @asset.save
-        format.html { redirect_to(@asset, :notice => 'Asset was successfully created.') }
+        format.html { redirect_to(@asset, :notice => "#{@asset} was successfully created") }
         format.xml  { render :xml => @asset, :status => :created, :location => @asset }
       else
         format.html { render :action => "new" }
@@ -60,7 +60,7 @@ class AssetsController < ApplicationController
 
     respond_to do |format|
       if @asset.update_attributes(params[:asset])
-        format.html { redirect_to(@asset, :notice => 'Asset was successfully updated.') }
+        format.html { redirect_to(@asset, :notice => "#{@asset} was successfully updated") }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -75,7 +75,7 @@ class AssetsController < ApplicationController
     @asset.destroy
 
     respond_to do |format|
-      format.html { redirect_to(assets_url) }
+      format.html { redirect_to(assets_url, :notice => "#{@asset} was successfully deleted" ) }
       format.xml  { head :ok }
     end
   end
@@ -104,6 +104,31 @@ class AssetsController < ApplicationController
     send_file file_path, :type => "image/png", :disposition => "inline"  
     
   end
+  
+  
+  # Thumbnails
+  #
+  #
+  # GET /assets/1/small
+  # GET /assets/1/small.png
+  def small
+    
+  end  
+  
+  # GET /assets/1/medium
+  # GET /assets/1/medium.png
+  def medium
+    
+  end  
+  
+  # GET /assets/1/large
+  # GET /assets/1/large.png
+  def large
+    
+  end  
+  
+  
+  
   
   
   private

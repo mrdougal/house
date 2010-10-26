@@ -1,0 +1,35 @@
+
+<div class="crud asset">
+
+	<%= link_to 'Create a new asset', new_asset_path, { 
+		:class => 'new', 
+		:accesskey => 'n' } unless controller.action_name == 'new' %>
+
+	<%- if @asset && !@asset.new_record? -%>
+
+		<%= link_to 'Show', 
+		asset_path(@asset), { 
+			:class => 'show',
+			:title => "View #{@asset}" } unless controller.action_name == 'show'  %>
+
+		<%#= link_to 'Edit', edit_asset_path(@asset), { 
+			:class => 'edit',
+			:title => "Edit #{@asset}",  
+			:accesskey => 'e' } unless controller.action_name == 'edit'  %>
+
+		<%= link_to 'Delete', asset_path(@asset), { 
+			:confirm => 'You sure you want to delete this asset?', 
+			:method => :delete ,
+			:class => 'delete',
+			:title => "Delete #{@asset}",  
+			:accesskey => 'd' } %>
+	
+	<%- end -%>
+	
+	<%= link_to 'Assets page', assets_path, {
+		:title => "Go back to the assets page",
+		:class => "index"  
+	} unless controller.action_name == 'index' %>
+	         
+</div>
+

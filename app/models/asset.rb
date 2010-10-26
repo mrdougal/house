@@ -6,6 +6,8 @@ class Asset
   
   
   include Mongoid::Document
+  include Mongoid::Timestamps
+
   include Upload::Common
   include Upload::Relationships
   
