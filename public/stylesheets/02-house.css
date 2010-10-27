@@ -1,13 +1,3 @@
-/* @override 
-	http://house.local/stylesheets/house.css?1287442242
-	http://house.local/stylesheets/03-house.css?1287983660
-	http://house.local/stylesheets/02-house.css?1287984937
-	http://house.local/stylesheets/02-house.css?1288069627
-	http://house.local/stylesheets/02-house.css?1288070535
-	http://house.local/stylesheets/02-house.css?1288073394
-	http://house.local/stylesheets/02-house.css?1288073424
-*/
-
 html { background-color: #d2d6db; color: #333;
 	padding: 0;
 	font: 10pt "Lucida Grande", Lucida, Verdana, sans-serif;
@@ -24,7 +14,7 @@ a { color: #d51716;
 }
 
 a:visited { color: #691c22; }
-a:hover { color: #ff491d; }
+a:hover { color: #fd7e2a; }
 
 
 
@@ -90,13 +80,14 @@ label {
 nav {
 	background-color: rgba(137,140,143,0.5);
 	padding: 10px 20px;
+	border-bottom: 5px solid rgba(145,145,145,0.25);
 }
 
 nav a {
 	float: left;
 	background-color: #d2d6db;
 	padding: 10px;
-	margin-top: -10px;
+	margin-top: -5px;
 }
 
 /* @end */
@@ -105,18 +96,27 @@ nav a {
 
 .thumb {
 	float: left;
-	width: 130px;
-	background-color: #fff;
+	width: 140px;
+	height: 160px;
+	background-color: #f6f6f6;
 	margin-right: 10px;
 	margin-bottom: 10px;
 	padding: 10px;
+	border: 1px solid #cacaca;
+}
+
+.thumb .frame {
+	display: block;
+	width: 100%;
+	height: 120px;
+	overflow: hidden;
+	border: 1px solid #cacaca;
+	background-color: #fffefe;
 }
 
 .thumb img {
-	width: 100px;
 	float: left;
 	overflow: hidden;
-	height: 100px;
 }
 
 .thumb .name {

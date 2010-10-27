@@ -6,7 +6,7 @@
 	<li class="thumb" id="<%= asset.id %>">
 		
 		<%= link_to asset do %>
-			<%= asset_image_tag asset, :small %>
+			<span class="frame"><%= asset_image_tag asset, :small %></span>
 			<span class="name"><%= asset.name %></span>
 		<% end %>
 	</li>
