@@ -14,31 +14,42 @@ module Upload
 
       # Files supplied by users may/will have spaces, comma's 
       # and other characters that will need to be escaped 
-      def escape_path(path)
-        
-        
-        # puts "path = #{path}"
-        path = path.to_s
-        
-        # backslashes
-        path.gsub!(%r{/{2,}}, "/")
-        
-        # Escape spaces
-        path.gsub!(/ /,'\ ')
-        
-        # single quotes
-        # path.gsub!(/'/,"\'")
-        path.gsub!(/'/,'*')
-        
-        # double quotes
-        path.gsub!('"','\"')
+      #
+      # This has been pulled from the Shellwords module
+      #
+      # Note that a resulted string should be used unquoted and is not
+      # intended for use in double quotes nor in single quotes.
+      #
+      def escape_path(str)
 
-        # puts "output = #{path}"
+        # An empty argument will be skipped, so return empty quotes.
+        return "''" if str.empty?
+
+        str = str.dup
+
+        # Process as a single byte sequence because not all shell
+        # implementations are multibyte aware.
+        str.gsub!(/([^A-Za-z0-9_\-.,:\/@\n])/n, "\\\\\\1")
+
+        # A LF cannot be escaped with a backslash because a backslash + LF
+        # combo is regarded as line continuation and simply ignored.
+        str.gsub!(/\n/, "'\n'")
+
+        return str
+      end
+
+      
+      # Runs the supplied command and checks that the exit code
+      # matches what's expected. Otherwise it will raise an exception
+      # Logs the command that is run
+      # 
+      # This code is heavily inspired from thoughtbots paperclip
+      def run(command, *params)
         
-        path
+        Rails.logger.info "Shell command #{cmd}"
+        
         
       end
-      
       
     end
     

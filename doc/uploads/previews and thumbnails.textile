@@ -21,6 +21,13 @@ Usage: Clipper /path/to/input/file
 *Please note* 
 * The first argument is expected to be the path to the target file. "Clippy" was built with the sole purpose of being called from an application such as house, so I don't feel it needs to be super smart about how it parses arguments. (as humans aren't really going to interface with it)
 
+2010-10-27
+We need to escape the path to the file. 
+As users may/will upload files with spaces and quotes etc.
+
+Have written some code to handle this, but i'm not convinced that it works correctly
+
+
 
 h3. Benefits
 
