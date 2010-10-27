@@ -9,6 +9,7 @@ class Preview
     
     
     include Upload::Common
+    include Upload::CommandLine
     
     
     attr_accessor :parent
@@ -58,10 +59,11 @@ class Preview
       cmd = []
       cmd << path_to_clipper.to_s
       
-      # Note that the path is in single quotes
+      # We need to escape the spaces in the parent.file.paths
       # Otherwise clipper will shit itself on files  which have spaces in their names. 
       # (or clipper will consider the parts of the filename as arguments)
-      cmd << "'#{parent.file.path}'" 
+      
+      cmd << escape_path(parent.file.path)
       
       # The path to the output file
       cmd << "-o #{path}"
