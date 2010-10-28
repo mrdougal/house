@@ -10,7 +10,7 @@ class Asset
 
   include Upload::Common
   include Upload::Relationships
-  
+
   
   field :name
   field :original_filename  # filename
@@ -25,14 +25,13 @@ class Asset
   after_create :store!
 
 
+  # Why not have a name method to display the name (if set), or display the basename?
+  # Because in the asset form the name will automatically be filled in with the basename
+  # If we replace the file the old filename will presist. 
+  # (as the filename will be prepopulated in the name field when we go to edit the asset)
 
   def to_s
-    name.nil? ? _id.to_s : name
-  end
-  
-
-  def name
-    self[:name].blank? ?  basename : self[:name]
+    name.blank? ? basename : name
   end
   
   # This is where the file (from the filesystem) is assigned to the record
@@ -103,9 +102,8 @@ class Asset
 
 
     # Don't do anything unless the file has changed
-    return unless file_has_changed?
     
-    if file?
+    if file? or file_has_changed?
     
       # We can only process files (objects that respond to path)
       #
@@ -118,7 +116,7 @@ class Asset
       
     else
       # Add error if there is no file
-      errors.add(:file, 'You need to upload a file')
+      errors.add(:file, 'You need to upload a file') if new_record?
     end
   end
   

@@ -7,7 +7,7 @@
 		
 		<%= link_to asset do %>
 			<span class="frame"><%= asset_image_tag asset, :small %></span>
-			<span class="name"><%= asset.name %></span>
+			<span class="name"><%= asset.to_s %></span>
 		<% end %>
 	</li>
 <% end %>
