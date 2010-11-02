@@ -3,9 +3,18 @@
 
 Add in a run command for calling external commands
 mainly
+
 * unzip : for archives
 * clipper : for previews
 * sips : for thumbnails
+
+Need to check the exit codes for the above processes
+
+
+2010-11-02
+Site wide configuration for...
+* location of assets (eg: outside of the webserver root)
+* size and format of thumbnails (eg: gif or png)
 
 
 All of these utilities should be installed in a location visible to the app (Rails.root)
