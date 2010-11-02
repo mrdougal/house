@@ -9,4 +9,12 @@
 		<td class="name">Uploaded</td>
 		<td class="value"><%= time_ago_in_words @asset.created_at %> ago</td>
 	</tr>
+	
+	<% if @asset.preview.exists? %>
+	<tr>
+		<td class="name">Preview created</td>
+		<td class="value"><%= time_ago_in_words @asset.preview_created_at %> ago</td>
+	</tr>
+	
+	<% end %>
 </table>
