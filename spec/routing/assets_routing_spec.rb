@@ -40,11 +40,12 @@ describe AssetsController do
     
     describe "preview" do
 
-      it "recognises and generates #preview" do
+      it "recognises and generates #preview (with png as the default format)" do
         { :get => "/assets/1/preview" }.should route_to( :controller => "assets", 
                                                          :action => "preview", 
-                                                         :id => "1" )
-
+                                                         :id => "1",
+                                                         :format => "png" )
+      end
       
       it "recognises and generates #preview as a png" do
         { :get => "/assets/1/preview.png" }.should route_to( :controller => "assets", 
@@ -60,7 +61,34 @@ describe AssetsController do
                                                              :format => 'jpg'  )
       end
       
+    end
+    
+    
+    describe "thumbnails" do
+      
+      it "recognises and generates #small (with a format of png)" do
+        { :get => "/assets/1/small" }.should route_to(  :controller => "assets",
+                                                        :action => "small",
+                                                        :id => "1",
+                                                        :format => "png"    )
+      end
 
+      it "recognises and generates #medium (with a format of png)" do
+        { :get => "/assets/1/medium" }.should route_to( :controller => "assets",
+                                                        :action => "medium",
+                                                        :id => "1",
+                                                        :format => "png"    )
+      end
+      
+      it "recognises and generates #large (with a format of jpg)" do
+        { :get => "/assets/1/large" }.should route_to(  :controller => "assets",
+                                                        :action => "large",
+                                                        :id => "1",
+                                                        :format => "jpg"    )
+      end
+      
+
+      
     end
 
 

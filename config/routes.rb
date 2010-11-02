@@ -3,7 +3,15 @@ House::Application.routes.draw do
 
   resources :assets do
     member do
-      get 'preview'
+      
+      # By default the preview is a png file
+      get 'preview', :format => 'png'
+
+      # Thumbnails, please note the formats
+      get 'small',  :format => 'png' 
+      get 'medium', :format => 'png' 
+      get 'large',  :format => 'jpg' 
+      
     end
   end
 

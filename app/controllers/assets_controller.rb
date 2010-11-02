@@ -1,6 +1,10 @@
 class AssetsController < ApplicationController
   
-  before_filter :get_asset, :only => [:update, :show, :edit, :destroy, :preview]
+  before_filter :get_asset, :except => [ :index, :new, :create ]
+  
+  # The preview and thumbnails need to have a preview first
+  before_filter :check_have_preview, :only => [ :preview, :small, :medium, :large ] 
+  
   
   # GET /assets
   # GET /assets.xml
@@ -89,20 +93,19 @@ class AssetsController < ApplicationController
   # this will take into consideration if we haven't yet attempted to create an index
   def preview
 
-    if @asset.preview.exists?
+    # Check to see if the image has been modified since they last requested the file
+    # if it hasn't then we'll give them a 302, otherwise we'll send the file down the file
 
-      # We have an image to send down the pipe
-      file_path = @asset.preview.path
-    else
-      
-      # We don't have a file to send down the wire
-      # Either the preview hasn't been created yet, or we were unable to create one
-      file_path = @asset.preview.missing_path
-      
-    end
-
-    send_file file_path, :type => "image/png", :disposition => "inline"  
+    if stale?(:etag => @asset.cache_key, :last_modified => @asset.preview.created_at.utc)
     
+      respond_to do |format|
+        format.png {
+       
+          # Send the file down the pipe...
+          send_file @asset.preview.path, :type => "image/png", :disposition => "inline", :status => 200
+        }
+      end
+    end
   end
   
   
@@ -135,6 +138,39 @@ class AssetsController < ApplicationController
   
   def get_asset
     @asset = Asset.find(params[:id])
+  end
+  
+  
+  # If the asset doesn't have a preview, we need to send down a generic image
+  # 
+  # Either the preview hasn't been created yet, or we were unable to create one
+  #
+  # There is a http status code for this situation...
+  # 
+  # 202 Accepted
+  # The request has been accepted for processing
+  # but the processing has not been completed. 
+  # The request might or might not eventually be acted upon
+  # as it might be disallowed when processing
+  #
+  def check_have_preview
+
+    unless @asset.preview.exists?
+    
+      if action_name.downcase == 'preview'
+        essence = @asset.preview 
+      else
+        essence = @asset.thumbnails[action_name.to_sym]
+      end
+      
+      send_file essence.missing_path, 
+                  :type => "image/#{essence.format}", 
+                  :disposition => "inline", 
+                  :status => 202
+    end
+    
+    
+    
   end
   
 end

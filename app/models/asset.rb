@@ -16,9 +16,9 @@ class Asset
   field :original_filename  # filename
   field :original_filesize, :type => Integer, :default => 0    # filesize in bytes
   
-  field :preview_generated_at, :type => DateTime
+  field :preview_created_at, :type => DateTime
   
-  validate :check_file 
+  validate :check_file
   
   
   # Callbacks
@@ -72,6 +72,14 @@ class Asset
     
   end
 
+
+
+  def cache_key
+    
+    { :id => id,
+      :size => size,
+      :basename => basename }
+  end
 
   private
   

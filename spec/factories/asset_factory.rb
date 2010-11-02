@@ -8,7 +8,7 @@
 
   Factory.define :processed_asset, :parent => :asset  do |f|
     
-    f.preview_generated_at { 3.hours.ago }
+    f.preview_created_at { 3.hours.ago }
 
   end
 

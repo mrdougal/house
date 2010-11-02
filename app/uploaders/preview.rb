@@ -75,8 +75,6 @@ class Preview
       cmd << "-s 800 "
       cmd = cmd.join(' ')
       
-      Rails.logger.info "Shell command #{cmd}"
-      
       result = `#{cmd}`
       
       
@@ -86,7 +84,24 @@ class Preview
       
       Rails.logger.info "Shell result from clipper #{result}"
       
+      # Mark that we now have a preview
+      self.parent.update_attributes :preview_created_at => Time.now
+      
     end
+    
+    alias :generate :create
+    
+    # Returns the time when the preview was last modified
+    # Hits the filesystem to get the modified time
+    def created_at
+      
+      
+      return nil unless exists?
+      
+      self.parent.preview_created_at ||= File.mtime(path)
+      
+    end
+    
     
     private
     
