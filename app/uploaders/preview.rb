@@ -44,6 +44,8 @@ class Preview
       File.join( Rails.root, 'app/views/shared/rescues/no_preview.png' ).to_s
     end
     
+    
+    
     # Attempt to create a preview of the original asset
     #
     # We need to check that the original file exits
@@ -92,13 +94,10 @@ class Preview
     alias :generate :create
     
     # Returns the time when the preview was last modified
-    # Hits the filesystem to get the modified time
+    # returns nil if the preview hasn't been created
     def created_at
       
-      
-      return nil unless exists?
-      
-      self.parent.preview_created_at ||= File.mtime(path)
+      exists? ? self.parent.preview_created_at : nil
       
     end
     

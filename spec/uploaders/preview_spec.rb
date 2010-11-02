@@ -53,11 +53,12 @@ describe "Asset Preview" do
       it_should_behave_like 'preview properties'
       it_should_behave_like 'preview relationships'
       
-      describe "path" do
-
-        it "should not be blank" do
-          @preview.path.should_not be_blank
-        end
+      it "should have a path" do
+        @preview.path.should_not be_blank
+      end
+      
+      it "should have a preview_created_at time" do
+        @asset.preview_created_at.should_not be_nil
       end
 
     end
@@ -78,11 +79,16 @@ describe "Asset Preview" do
           @preview.path.should_not be_blank
         end
         
-        it "should return a path to no_preview.png" do
+        it "should return a path containing 'no_preview.png'" do
           @preview.missing_path.should =~ /no_preview.png/
         end
         
       end
+      
+      it "should not have a preview_created_at time" do
+        @asset.preview_created_at.should be_nil
+      end
+      
       
     end
 
