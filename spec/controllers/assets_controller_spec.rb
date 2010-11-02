@@ -63,21 +63,16 @@ describe AssetsController do
   end
 
 
+  shared_examples_for 'a common asset' do
 
-  describe "asset with no preview" do
-    
-    before(:each) do
-      @asset = Factory :asset
-    end
-      
     describe "GET show" do
-    
-      it "assigns the requested asset as @asset" do
+
+      it "should be successful" do
         get :show, :id => @asset.id.to_s
         response.should be_success
       end
     end
-    
+
     describe "PUT update" do
 
       describe "with valid params" do
@@ -115,70 +110,97 @@ describe AssetsController do
       end
 
     end
+
+  end
+
+  shared_examples_for 'common preview' do
     
-    describe "preview and thumbnails" do
-      
-      describe "GET preview" do
-        
-        it "should have a status of 202 (accepted)" do
-          get :preview, :id => @asset.id.to_s
-          response.status.should == 202
-        end
-        
-        it "should have a mime type of image/png" do
-
-          get :preview, :id => @asset.id.to_s
-          response.content_type.should == 'image/png'
-        end
-        
-      end
-      
-      describe "small thumbnail" do
-        
-        it "should have a status of 202 (accepted)" do
-          get :small, :id => @asset.id.to_s
-          response.status.should == 202 
-        end
-        
-        it "should have a mime type of image/png" do
-
-          get :small, :id => @asset.id.to_s
-          response.content_type.should == 'image/png'
-        end
-        
-      end
-      
-      describe "medium thumbnail" do
-        
-        it "should have a status of 202 (accepted)" do
-          get :medium, :id => @asset.id.to_s
-          response.status.should == 202 
-        end
-
-        it "should have a mime type of image/png" do
-
-          get :medium, :id => @asset.id.to_s
-          response.content_type.should == 'image/png'
-        end
-
-      end
-      
-      describe "large thumbnail" do
-        
-        it "should have a status of 202 (accepted)" do
-          get :large, :id => @asset.id.to_s
-          response.status.should == 202 
-        end
-
-        it "should have a mime type of image/jpg" do
-
-          get :large, :id => @asset.id.to_s
-          response.content_type.should == 'image/jpg'
-        end
-
-      end
-
+    it "should be a successful request" do
+      get :preview, :id => @asset.id.to_s
+      response.should be_success
     end
+
+    it "should have a mime type of image/png" do
+      get :preview, :id => @asset.id.to_s
+      response.content_type.should == 'image/png'
+    end
+
+  end
+  
+  shared_examples_for 'common small thumbnail' do
+    
+    it "should have a successful request" do
+      get :small, :id => @asset.id.to_s
+      response.should be_success
+    end
+    
+    it "should have a mime type of image/png" do
+      get :small, :id => @asset.id.to_s
+      response.content_type.should == 'image/png'
+    end
+    
+  end
+
+  shared_examples_for 'common medium thumbnail' do
+    
+    it "should have a successful request" do
+      get :medium, :id => @asset.id.to_s
+      response.should be_success
+    end
+    
+    it "should have a mime type of image/png" do
+      get :medium, :id => @asset.id.to_s
+      response.content_type.should == 'image/png'
+    end
+    
+  end
+
+  shared_examples_for 'common large thumbnail' do
+    
+    it "should have a successful request" do
+      get :large, :id => @asset.id.to_s
+      response.should be_success
+    end
+    
+    it "should have a mime type of image/jpg" do
+      get :large, :id => @asset.id.to_s
+      response.content_type.should == 'image/jpg'
+    end
+    
+  end
+
+
+
+  describe "asset with no preview" do
+    
+    before(:each) do
+      @asset = Factory :asset
+    end
+
+    it_should_behave_like 'a common asset'
+
+    it_should_behave_like 'common preview'
+    it_should_behave_like 'common small thumbnail'
+    it_should_behave_like 'common medium thumbnail'
+    it_should_behave_like 'common large thumbnail'
+    
+  end
+  
+  
+  describe "asset which we can't produce a preview" do
+    
+    before(:each) do
+      
+      # We can't/won't generate previews from postscript
+      @asset = Factory :processed_asset, :file => get_fixture('composite/example.ps') 
+    end
+    
+    it_should_behave_like 'a common asset'
+
+    it_should_behave_like 'common preview'
+    it_should_behave_like 'common small thumbnail'
+    it_should_behave_like 'common medium thumbnail'
+    it_should_behave_like 'common large thumbnail'
     
   end
   
@@ -189,18 +211,13 @@ describe AssetsController do
       @asset.preview.stub(:exists?).and_return true
     end
 
-    it "should have a status of 200" do
+    it_should_behave_like 'a common asset'
 
-      get :preview, :id => @asset.id.to_s
-      response.status.should == 200
-    end
-    
-    it "should have a mime type of image/png" do
-      
-      get :preview, :id => @asset.id.to_s
-      response.content_type.should == 'image/png'
-    end
-    
+    it_should_behave_like 'common preview'
+    it_should_behave_like 'common small thumbnail'
+    it_should_behave_like 'common medium thumbnail'
+    it_should_behave_like 'common large thumbnail'
+
   end
 
   
