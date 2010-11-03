@@ -116,17 +116,50 @@ class AssetsController < ApplicationController
   # GET /assets/1/small.png
   def small
     
+    if stale?(:etag => @asset.cache_key, :last_modified => @asset.preview.created_at.utc)
+    
+      respond_to do |format|
+        format.png {
+       
+          # Send the file down the pipe...
+          send_file @asset.thumbnails[:small].path, :type => "image/png", :disposition => "inline", :status => 200
+        }
+      end
+    end
   end  
   
   # GET /assets/1/medium
   # GET /assets/1/medium.png
   def medium
+
+    if stale?(:etag => @asset.cache_key, :last_modified => @asset.preview.created_at.utc)
+    
+      respond_to do |format|
+        format.png {
+       
+          # Send the file down the pipe...
+          send_file @asset.thumbnails[:medium].path, :type => "image/png", :disposition => "inline", :status => 200
+        }
+      end
+    end
     
   end  
   
   # GET /assets/1/large
   # GET /assets/1/large.png
   def large
+    
+    
+    if stale?(:etag => @asset.cache_key, :last_modified => @asset.preview.created_at.utc)
+    
+      respond_to do |format|
+        format.jpg {
+       
+          # Send the file down the pipe...
+          send_file @asset.thumbnails[:large].path, :type => "image/jpg", :disposition => "inline", :status => 200
+        }
+      end
+    end
     
   end  
   
