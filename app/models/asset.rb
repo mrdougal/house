@@ -23,6 +23,7 @@ class Asset
   
   # Callbacks
   after_create :store!
+  after_create :process!
 
 
   # Why not have a name method to display the name (if set), or display the basename?
@@ -69,6 +70,9 @@ class Asset
   # Typically 'process!' will be called outside outside 
   # of the request responce cycle eg: via delayed job
   def process!
+    
+    # Create thumbnails if we can create a preview
+    self.thumbnails.create if self.preview.create
     
   end
 
@@ -138,11 +142,14 @@ class Asset
   def store!
     
     raise "Unable to store the file" unless file
-    
+
     # Construct the path in the filesystem
     FileUtils.mkdir_p(File.dirname(path))
     FileUtils.mv(@file.path, path)
     FileUtils.chmod(0644, path)
+    
+    # Re-assign file
+    self.file = File.new(path)
     
   end
 

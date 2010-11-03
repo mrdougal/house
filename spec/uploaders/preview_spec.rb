@@ -45,13 +45,16 @@ describe "Asset Preview" do
     describe "processed assets" do
       
       before(:each) do
-        @asset = Factory :processed_asset, :file => get_fixture(val) 
+        @asset = Factory :asset, :file => get_fixture(val) 
+
+        # Process the asset
+        @asset.process!
         @preview = @asset.preview
-        @preview.stub(:exists?).and_return(true)
+        
       end 
 
-      it_should_behave_like 'preview properties'
-      it_should_behave_like 'preview relationships'
+      # it_should_behave_like 'preview properties'
+      # it_should_behave_like 'preview relationships'
       
       it "should have a path" do
         @preview.path.should_not be_blank
@@ -59,6 +62,21 @@ describe "Asset Preview" do
       
       it "should have a preview_created_at time" do
         @asset.preview_created_at.should_not be_nil
+      end
+      
+      describe "dimensions" do
+        
+        it "should not be nil" do
+          @preview.dimensions.should_not be_nil
+        end
+        
+        it "should have a width" do
+          @preview.dimensions[:width].should_not be_nil
+        end
+
+        it "should have a height" do
+          @preview.dimensions[:height].should_not be_nil
+        end
       end
 
     end

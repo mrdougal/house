@@ -49,9 +49,12 @@ module Upload
         # return unless has_preview?
 
         @thumbnails ||= ThumbnailSet.new(self, {
-          :small  => { :size => '40x40' },
-          :medium => { :size => '150x150' },
-          :large  => { :size => '800x800', :format => :jpg }
+          :small  => { :dimensions => { :width  => '40', 
+                                        :height => '40' }},
+          :medium => { :dimensions => { :width  => '150',
+                                        :height => '150' }},
+          :large  => { :dimensions => { :width  => '800',
+                                        :height => '800'}, :format => :jpg }
         })
 
       end

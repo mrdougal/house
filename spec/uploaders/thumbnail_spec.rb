@@ -68,12 +68,12 @@ describe "Asset Thumbnails" do
       @thumb.format.should == :png
     end
     
-    it "should be less than 50 pixel wide" do
-      pending
+    it "should have dimensions less than 50 pixel wide" do
+      @thumb.dimensions[:width].should < '50'
     end
     
-    it "should be less than 50 pixels high" do
-      pending
+    it "should have dimensions less than 50 pixels high" do
+      @thumb.dimensions[:height].should < '50'
     end
     
   end

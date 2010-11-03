@@ -1,12 +1,10 @@
 class ThumbnailSet
   
   attr_accessor :parent
-  # attr_accessor :thumbs
   
   def initialize(parent, args)
 
     self.parent = parent
-    # self.thumbs = {}
     
     args.each do |key, value|
       assign_thumbnail key, value
@@ -16,6 +14,18 @@ class ThumbnailSet
   def thumbs
     @thumbs ||= {}
   end
+
+  # Loop through the thumbnails and ask them to create their thumbnails
+  def create
+
+    return unless parent.preview.exists?
+
+    self.thumbs.each_pair do |name, thumb|
+      thumb.create
+    end
+  end
+  
+  alias :generate :create
   
   
   private

@@ -64,7 +64,6 @@ class Preview
       # We need to escape the spaces in the parent.file.paths
       # Otherwise clipper will shit itself on files  which have spaces in their names. 
       # (or clipper will consider the parts of the filename as arguments)
-      
       cmd << escape_path(parent.file.path)
       
       # The path to the output file
@@ -101,6 +100,85 @@ class Preview
       
     end
     
+    # Returns the resulting dimensions of the preview file
+    #
+    # We are using sips to tell us the dimensions of the preview.
+    # It would be unreliable to base the dimensions on the original asset
+    # as some items won't have pixel dimensions, eg: vectors (fonts, svg)
+    # or the returned preview make be smaller, such as the case with iWork docs
+    # when the return preview is ~400 pixels
+    #
+    # example sips usage: sips --getProperty pixelWidth path/to/asset/preview.png
+    def dimensions
+      
+      return unless exists?
+      
+      cmd = ['sips']
+      
+      # You can chain the attributes you want to retrieve
+      cmd << '--getProperty pixelWidth'
+      cmd << '--getProperty pixelHeight'
+      
+      # Optionally you can return all of the properties by passing in all
+      # eg: --getProperty all
+      # 
+      # List of available properties
+      # 
+      # dpiHeight        float
+      # dpiWidth         float
+      # pixelHeight      integer (read-only)
+      # pixelWidth       integer (read-only)
+      # typeIdentifier   string (read-only)
+      # format           string jpeg | tiff | png | gif | jp2 | pict | bmp | qtif | psd | sgi | tga
+      # formatOptions    string default | [low|normal|high|best|<percent>] | [lzw|packbits]
+      # space            string (read-only)
+      # samplesPerPixel  integer (read-only)
+      # bitsPerSample    integer (read-only)
+      # creation         string (read-only)
+      # make             string
+      # model            string
+      # software         string (read-only)
+      # description      string
+      # copyright        string
+      # artist           string
+      # profile          binary data
+      # hasAlpha         boolean (read-only)
+      
+      cmd << escape_path(path)
+      
+      result = self.class.send(:'`', cmd.join(' '))
+      
+      # Now we'll step through each line of the output from sips.
+      # Example of typical output from sips...
+      # 
+      # /path/to/asset/preview.png
+      #   pixelWidth: 565
+      #   pixelHeight: 800
+      # 
+      out = {}
+      result.each_line do |line|
+
+        line = line.split(':')
+
+        # Skip unless we have an array with two item in it
+        # (which is what the first line is)
+        next unless line[1]
+
+        # Convert sips output into ruby friendly hash
+        # eg: pixelWidth  => :width
+        #     samplesPerPixel => :samples_per_pixel
+
+        key = line[0].strip.gsub('pixel','').underscore
+        value = line[1].strip
+
+        out[key.to_sym] = value
+
+      end
+
+      # Return our output
+      out
+      
+    end
     
     private
     

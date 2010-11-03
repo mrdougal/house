@@ -8,12 +8,12 @@ describe "Processed Asset" do
     
     # Names
 
-    it "should have a name" do
-      @asset.name.should_not be_blank
+    it "should return something from to_s" do
+      @asset.to_s.should_not be_blank
     end
     
-    it "should have the same name as basename" do
-      @asset.name.should == @basename
+    it "should return the basename from to_s" do
+      @asset.to_s.should == @basename
     end
     
     it "should have a path" do
@@ -71,8 +71,8 @@ describe "Processed Asset" do
           @asset.preview.should be_instance_of(Preview)
         end
         
-        it "should not have any thumbnails" do
-          @asset.thumbnails.should be_nil
+        it "should have thumbnails" do
+          @asset.thumbnails.should_not be_empty
         end
     
         it "should be ok to process" do

@@ -1,20 +1,14 @@
 require "spec_helper"
 
 
-describe "Thumbnail set" do
+describe "ThumbnailSet" do
   
   
   before(:each) do
     
-    
-    @asset = Factory :asset, :file => get_fixture(images.first) 
-    @definition = {
-      :small  => { :size => '40x40' },
-      :medium => { :size => '150x150' },
-      :large  => { :size => '800x800', :format => :jpg }
-    }
-    
-    @set = ThumbnailSet.new @asset, @definition
+    @asset = Factory :asset
+    @set = @asset.thumbnails
+
   end
   
   
@@ -93,5 +87,18 @@ describe "Thumbnail set" do
     
   end
   
+  
+  describe "creating thumbnails" do
+    
+    it "should respond to create" do
+      @set.should respond_to('create')
+    end
+    
+    it "should respond to generate (which is an alias of create)" do
+      @set.should respond_to('generate')
+    end
+    
+    
+  end
   
 end
