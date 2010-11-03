@@ -119,7 +119,7 @@ class Thumbnail
   
   # Sips accepts jpeg not jpg as an output format
   # we want to have .jpg as our file extensions
-  def sip_output_format
+  def sips_output_format
     format.to_s == 'jpg' ? 'jpeg' : format.to_s
   end
 
