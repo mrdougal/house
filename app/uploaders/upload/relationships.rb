@@ -46,11 +46,9 @@ module Upload
       # TODO : This can be fixed up with an Association Proxy (like what rails uses)
       def thumbnails
 
-        # return unless has_preview?
-
         @thumbnails ||= ThumbnailSet.new(self, {
           :small  => { :dimensions => { :width  => '40', 
-                                        :height => '40' }},
+                                        :height => '40' }, :crop => true },
           :medium => { :dimensions => { :width  => '150',
                                         :height => '150' }},
           :large  => { :dimensions => { :width  => '800',

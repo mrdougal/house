@@ -68,6 +68,10 @@ describe "Asset Thumbnails" do
       @thumb.format.should == :png
     end
     
+    it "should say it's cropping" do
+      @thumb.should be_crop
+    end
+    
     it "should have dimensions less than 50 pixel wide" do
       @thumb.dimensions[:width].should < '50'
     end
@@ -94,11 +98,13 @@ describe "Asset Thumbnails" do
       @thumb.name.should == :medium
     end
     
-    
     it "should have a format of png" do
       @thumb.format.should == :png
     end
-    
+
+    it "should not be cropping" do
+      @thumb.should be_crop
+    end
 
   end
   
@@ -120,6 +126,10 @@ describe "Asset Thumbnails" do
     
     it "should have a format of jpg" do
       @thumb.format.should == :jpg
+    end
+    
+    it "should not be cropping" do
+      @thumb.should_not be_crop
     end
     
     

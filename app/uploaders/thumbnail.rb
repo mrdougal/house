@@ -6,21 +6,22 @@ class Thumbnail
   include Upload::Common
   include Upload::CommandLine
   
-  
   attr_accessor :parent
   attr_accessor :name
+  attr_accessor :config
   attr_accessor :format
   attr_accessor :dimensions
   
   delegate :preview, :to => :parent 
-  # delegate :id,      :to => :parent 
   
   def initialize(parent, name, config)
 
     self.parent    = parent
     self.name      = name
 
+    @config         = config
     self.dimensions = config[:dimensions]
+    
     self.format     = config[:format]   
     self.format     = :png if self.format.nil?
     
@@ -110,6 +111,9 @@ class Thumbnail
     
   end
   
+  def crop?
+    @config[:crop].nil? ? false : @config[:crop]
+  end
   
   private
   
