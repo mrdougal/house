@@ -53,9 +53,6 @@ describe "Asset Preview" do
         
       end 
 
-      # it_should_behave_like 'preview properties'
-      # it_should_behave_like 'preview relationships'
-      
       it "should have a path" do
         @preview.path.should_not be_blank
       end
