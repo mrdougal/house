@@ -63,16 +63,12 @@ describe "Asset Preview" do
       
       describe "dimensions" do
         
-        it "should not be nil" do
-          @preview.dimensions.should_not be_nil
-        end
-        
         it "should have a width" do
-          @preview.dimensions[:width].should_not be_nil
+          @preview.width.should_not be_nil
         end
 
         it "should have a height" do
-          @preview.dimensions[:height].should_not be_nil
+          @preview.height.should_not be_nil
         end
       end
 
@@ -101,7 +97,8 @@ describe "Asset Preview" do
       end
       
       it "should not have a preview_created_at time" do
-        @asset.preview_created_at.should be_nil
+        pending 'We need to process images outside of the request-response loop'
+        # @asset.preview_created_at.should be_nil
       end
       
       
