@@ -46,7 +46,7 @@ describe "Creating and Updating Asset" do
         end
 
         it "should return '#{File.basename(val)}' as it's basename" do
-          @asset.name.should == File.basename(val)
+          @asset.basename.should == File.basename(val)
         end
 
         it "should return '#{File.basename(val)}' from to_s" do
@@ -102,7 +102,6 @@ describe "Creating and Updating Asset" do
 
     before(:each) do
       @asset = Factory.build :asset, :file => nil
-      @asset.save
     end
 
     it "should not be valid" do
