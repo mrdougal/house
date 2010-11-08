@@ -63,7 +63,7 @@ class Asset
   
   # Return boolean as to weither we have a file
   def file?
-    !!file
+    !!file and !file.nil?
   end
 
 
@@ -112,24 +112,16 @@ class Asset
   # and check that the file isn't zero bytes
   def check_file
 
-
     # Don't do anything unless the file has changed
-    
     if file? or file_has_changed?
     
-      # We can only process files (objects that respond to path)
-      #
-      # 2010-10-25
-      # Raise a nasty error if our file object doesn't respond to path
-      raise "Wasn't passed an object that responds to path" unless file.respond_to? :path
-
-      # Add errors if the file is empty
-      errors.add(:file, 'was zero bytes') if File.size(file).zero?
+      validate_file_responds_to_path
+      validate_file_is_not_empty
       
     else
-      # Add error if there is no file
-      errors.add(:file, 'You need to upload a file') if new_record?
+      validate_presense_of_file
     end
+
   end
   
   # If *either* filename or size change, we consider the file to have changed
@@ -137,6 +129,20 @@ class Asset
     original_filename_changed? or original_filesize_changed?
   end
   
+  # Add error if there is no file
+  def validate_presense_of_file
+    errors.add(:file, 'You need to upload a file') if new_record?
+  end
+  
+  # Add errors if the file is empty
+  def validate_file_is_not_empty
+    errors.add(:file, 'was zero bytes') if file.nil? or File.size(file).zero?
+  end
+
+  # We can only process files (objects that respond to path)
+  def validate_file_responds_to_path
+    errors.add(:file, "didn't respond to path") unless file.respond_to? :path
+  end
 
   # Create our path to where we need to be stored, then move our file there
   def store!

@@ -109,6 +109,7 @@ describe "Creating and Updating Asset" do
     end
 
     it "should have errors" do
+      @asset.valid?
       @asset.errors.should_not be_empty
     end
 
