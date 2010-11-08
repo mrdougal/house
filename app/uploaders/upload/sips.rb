@@ -68,7 +68,7 @@ module Upload
     # Sips accepts jpeg not jpg as an output format
     # we want to have .jpg as our file extensions
     def format
-      modifier.format.to_s == 'jpg' ? 'jpeg' : modifier.format.to_s
+      target.format.to_s == 'jpg' ? 'jpeg' : target.format.to_s
     end
     
     # Returns a string with the arguments for creating the desired thumbnail
