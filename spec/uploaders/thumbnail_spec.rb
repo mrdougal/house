@@ -17,6 +17,10 @@ describe "Asset Thumbnails" do
     it "should have a preview" do
       @thumb.preview.should == @asset.preview
     end
+    
+    it "should have a path" do
+      @thumb.path.should_not be_nil
+    end
   
 
     describe "path" do
