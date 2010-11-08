@@ -6,24 +6,25 @@ class Thumbnail
   include Upload::Common
   include Upload::CommandLine
   
-  attr_accessor :parent
-  attr_accessor :name
-  attr_accessor :config
-  attr_accessor :format
-  attr_accessor :dimensions
+  attr_accessor :parent, :name, :config, :format, :dimensions, :crop
+  attr_writer :crop
   
   delegate :preview, :to => :parent 
   
-  def initialize(parent, name, config)
+  def initialize(args={})
 
-    self.parent    = parent
-    self.name      = name
+    self.parent     = args[:parent]
+    self.name       = args[:name]
+    self.config     = args[:config]
 
-    @config         = config
-    self.dimensions = config[:dimensions]
-    
-    self.format     = config[:format]   
+    unless self.config.nil?
+      
+      self.dimensions = self.config[:dimensions]
+      self.format     = self.config[:format]   
+    end
+
     self.format     = :png if self.format.nil?
+
     
   end
   
@@ -74,53 +75,25 @@ class Thumbnail
     
     # Make the directory (if doesn't already exist)
     FileUtils.mkdir_p File.dirname(path)
-    cmd = []
 
-    # Are we cropping?
-    
-    
-    # Target dimensions
-    # Size is stored in the config as a hash { :width => "40", :height => "40" } 
-    
-    
-    # We need to calculate the longer side, be it width or height
-    
-    
-    cmd << '-s format'
-    cmd << sips_output_format
-
-
-    cmd << '--resampleHeightWidth'
-    cmd << self.dimensions[:height]
-    cmd << self.dimensions[:width]
-    
-    
-    # Path to preview file
-    cmd << escape_path(parent.preview.path)
-    
-    # Path to our thumbnail
-    cmd << '--out'
-    cmd << escape_path(path)
-    
-    
-    cmd = cmd.join(' ')
-    result = `sips #{cmd}`
-    
+    cmd = Upload::Sips.new :target => self
+    result = `#{cmd.to_s}`
     
     Rails.logger.info "Result from sips #{result}"
     
   end
   
+  
+  alias :save! :create
+
+  def crop
+    @crop
+  end
+  
   def crop?
-    @config[:crop].nil? ? false : @config[:crop]
+    self.crop == true
   end
   
   private
-  
-  # Sips accepts jpeg not jpg as an output format
-  # we want to have .jpg as our file extensions
-  def sips_output_format
-    format.to_s == 'jpg' ? 'jpeg' : format.to_s
-  end
 
 end

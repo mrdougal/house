@@ -51,7 +51,7 @@ describe "Asset Thumbnails" do
   describe "small" do
     
     before(:each) do
-      @thumb = @asset.thumbnails.small
+      @thumb = Factory :thumb_small, :parent => @asset
     end
     
     it_should_behave_like 'all thumbnails'
@@ -85,7 +85,7 @@ describe "Asset Thumbnails" do
   describe "medium" do
 
     before(:each) do
-      @thumb = @asset.thumbnails.medium
+      @thumb = Factory :thumb_medium, :parent => @asset
     end
     
     it_should_behave_like 'all thumbnails'
@@ -102,8 +102,12 @@ describe "Asset Thumbnails" do
       @thumb.format.should == :png
     end
 
+    it "should return crop false" do
+      @thumb.crop.should == false
+    end
+    
     it "should not be cropping" do
-      @thumb.should be_crop
+      @thumb.should_not be_crop
     end
 
   end
@@ -111,7 +115,7 @@ describe "Asset Thumbnails" do
   describe "large" do
     
     before(:each) do
-      @thumb = @asset.thumbnails.large
+      @thumb = Factory :thumb_large, :parent => @asset
     end
     
     it_should_behave_like 'all thumbnails'

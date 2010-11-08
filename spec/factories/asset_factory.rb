@@ -22,19 +22,25 @@
     
   end
   
-  Factory.define :thumb do |t|
+  Factory.define :thumb, :class => Thumbnail do |t|
     
+    t.parent { Factory :processed_asset }
     t.name    :large
-    t.size    '800x800'
-    t.crop    false
+    t.dimensions {{ :width => 800, :height => 800 }}
+    t.crop   false 
     t.format :jpg
+    # }}
     
   end
+  
+  
+  # This is an alias, to the base thumb class
+  Factory.define :thumb_large, :parent => :thumb do |t| end
   
   Factory.define :thumb_medium, :parent => :thumb do |t|
 
     t.name    :medium
-    t.size    '150x150'
+    t.dimensions {{ :width => "150", :height => "150" }}
     t.format  :png
 
   end
@@ -42,7 +48,7 @@
   Factory.define :thumb_small, :parent => :thumb_medium do |t|
     
     t.name :small
-    t.size '40x40'
+    t.dimensions {{ :width => "40", :height => "40" }}
     t.crop true
   end
 

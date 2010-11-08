@@ -1,26 +1,24 @@
 module Upload
   
   # Methods for talking to sips
-  # This is influenced by paperclips Geometry class, which uses imagemagik
-  #
+  # This is influenced by paperclip's Geometry class
+
   class Sips
     
     include Upload::CommandLine
     
     
-    attr_accessor :height, :width, :path, :modifier
+    attr_accessor :path, :target
     
     def initialize(args={})
       
-      @height   = args[:height]
-      @width    = args[:width]
-      @path     = args[:path]
-      
-      @modifier = args[:modifier]
+      @path   = args[:path]
+
+      # Target will typically be a Thumbnail/Preview
+      # This is so we can ask it for it's target dimensions, cropping information
+      @target = args[:target]
       
     end
-    
-    
     
     def dimensions
       
@@ -67,6 +65,19 @@ module Upload
     end
     
     
+    # Sips accepts jpeg not jpg as an output format
+    # we want to have .jpg as our file extensions
+    def format
+      modifier.format.to_s == 'jpg' ? 'jpeg' : modifier.format.to_s
+    end
+    
+    # Returns a string with the arguments for creating the desired thumbnail
+    # based on arguments from the modifier (typically a thumbnail)
+    def to_s
+      
+    end
+    
+    private
     
     # Now we'll step through each line of the output from sips.
     # Example of typical output from sips...
@@ -101,6 +112,8 @@ module Upload
       out
       
     end
+    
+    
     
     
     

@@ -32,7 +32,7 @@ class ThumbnailSet
   
   def assign_thumbnail(key, options)
 
-    self.thumbs[key] = Thumbnail.new(self.parent, key, options)
+    self.thumbs[key] = Thumbnail.new( :parent => self.parent, :name => key, :config => options )
     
     class_eval <<-RUBY
       def #{key}
