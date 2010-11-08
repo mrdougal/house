@@ -8,21 +8,21 @@ module Upload
     include Upload::CommandLine
     
     
-    attr_accessor :path, :target
+    attr_accessor :target
     
     def initialize(args={})
       
-      @path   = args[:path]
 
       # Target will typically be a Thumbnail/Preview
       # This is so we can ask it for it's target dimensions, cropping information
       @target = args[:target]
+      # @path   = args[:target].path
       
     end
     
     def dimensions
       
-      raise "No path supplied" if self.path.nil?
+      raise "No path supplied" if self.target.path.nil?
       
       # Optionally you can return all of the properties by passing in all
       # eg: --getProperty all
@@ -55,7 +55,7 @@ module Upload
       cmd << '--getProperty pixelWidth'
       cmd << '--getProperty pixelHeight'
 
-      cmd << escape_path(self.path)
+      cmd << escape_path(target.path)
 
       result = self.class.send(:'`', cmd.join(' '))
       
