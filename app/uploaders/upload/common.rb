@@ -53,7 +53,7 @@ module Upload
       # This will return a path to where the file should be
       # regardless to weither the file exists or not
       def path
-        File.expand_path File.join(Rails.root,'uploads', parent_class_name, id_partition, version_dir, basename)
+        File.expand_path File.join(upload_base_path, parent_class_name, id_partition, version_dir, basename)
       end
 
       # A shortcut method, where we call the parent id and then to s
@@ -70,6 +70,11 @@ module Upload
       # I've included it in here as it's effectively a shortcut, as the url and path methods both call this
       def parent_class_name
         self.parent.class.name.downcase.pluralize
+      end
+      
+      
+      def upload_base_path
+        House::Application.config.upload_base_path
       end
 
 

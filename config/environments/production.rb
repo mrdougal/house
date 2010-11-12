@@ -46,4 +46,6 @@ House::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  
+  config.upload_base_path = File.expand_path("#{Rails.root}/../site_uploads")
 end

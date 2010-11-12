@@ -32,4 +32,9 @@ House::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+  
+  
+  # Where the uploaded assets are stored
+  config.upload_base_path = File.expand_path("#{Rails.root}/../site_uploads_test")
+  
 end
