@@ -3,6 +3,20 @@
 # 2010-09-24
 # Helper methods for testing uploading of the application
 
+
+module TempfileInstanceMethods
+  
+  def original_filename
+    @original_filename
+  end
+  
+  def original_filename=(val)
+    @original_filename = val
+  end
+  
+end
+
+
 def get_fixture(n = nil)
   
   # Assign a random file, if no name was provided
@@ -25,12 +39,14 @@ def get_fixture(n = nil)
   ext = File.extname(f_name)
   base_name = File.basename(f_name, ext)
   
+
+  Tempfile.send :include, TempfileInstanceMethods
+ 
   # Use the Array form to enforce an extension in the filename:
   # file = Tempfile.new(['hello', '.jpg'])
   # file.path  # => something like: "/tmp/foo2843-8392-92849382--0.jpg"
-  # 
   tmp_file = Tempfile.new([base_name, ext])
-  
+  tmp_file.original_filename = File.basename f_name
 
   # We need to mock the method orginal_filename
   # as :original_filename is a Rails extension on Tempfile
