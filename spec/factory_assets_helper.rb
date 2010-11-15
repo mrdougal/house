@@ -8,20 +8,33 @@ def get_fixture(n = nil)
   # Assign a random file, if no name was provided
   n = all_files.shuffle.first if n.nil?
   
-  puts "Using #{n} as an asset"
+  puts "Using #{n} as an asset" if Rails.env.test?
   
   # The n will most likely be passed in with a path (or part of one)
   f_name = File.basename(n)
-  f_path = File.join(File.dirname(__FILE__), 'fixtures/assets', n)
+  f_path = File.join(File.expand_path("#{Rails.root}/spec"), 'fixtures/assets', n)
+
+
 
   # Duplicate the contents of the requested file into a tempfile
   # Granted this is all in Ruby, so it's not the fastest but since 
   # this is only for testing it should be ok…
-  tmp_file = Tempfile.new(f_name)
+
+  # Split the fixture name into basename and extension
+  # this is so we can create a tempfile that preserves file extensions
+  ext = File.extname(f_name)
+  base_name = File.basename(f_name, ext)
+  
+  # Use the Array form to enforce an extension in the filename:
+  # file = Tempfile.new(['hello', '.jpg'])
+  # file.path  # => something like: "/tmp/foo2843-8392-92849382--0.jpg"
+  # 
+  tmp_file = Tempfile.new([base_name, ext])
+  
 
   # We need to mock the method orginal_filename
   # as :original_filename is a Rails extension on Tempfile
-  tmp_file.stub(:original_filename).and_return(f_name)
+  # tmp_file.stub(:original_filename).and_return(f_name) if Rails.env.test?
   
   # Convert to binmode as it's faster?
   # Write the content of the file, then rewind
