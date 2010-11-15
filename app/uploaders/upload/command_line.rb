@@ -6,10 +6,6 @@ module Upload
     
     
     module ClassMethods
-      # currently empty
-    end
-    
-    module InstanceMethods
 
 
       # Files supplied by users may/will have spaces, comma's 
@@ -39,6 +35,17 @@ module Upload
       end
 
       
+      
+      
+    end
+    
+    module InstanceMethods
+
+
+      def escape_path(str)
+        self.class.escape_path(str)
+      end
+
       # Runs the supplied command and checks that the exit code
       # matches what's expected. Otherwise it will raise an exception
       # Logs the command that is run

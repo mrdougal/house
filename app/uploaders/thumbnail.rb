@@ -66,7 +66,7 @@ class Thumbnail
     # Make the directory (if doesn't already exist)
     FileUtils.mkdir_p File.dirname(path)
 
-    cmd = Upload::Sips.new :target => self
+    cmd = Upload::Sips.new :target => self, :source => self.preview 
     result = `#{cmd.to_s}`
     
     Rails.logger.info "Result from sips #{result}"

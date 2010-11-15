@@ -162,6 +162,12 @@ describe "Thumbnail dimensions" do
   end
    
    
-   
+  describe "cropping geometries" do
+    
+    it "does something" do
+      
+    end
+    
+  end
     
 end

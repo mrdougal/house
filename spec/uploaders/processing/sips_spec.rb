@@ -7,10 +7,10 @@ describe "Sips" do
 
     @file = File.new(File.join(Rails.root, 'spec/fixtures/assets/previews/438x800.png' ))
 
-    @target = Factory(:thumb)
+    @target = Factory(:thumb_small)
     @target.stub(:path).and_return @file.path
 
-    @sips = Upload::Sips.new :target => @target
+    @sips = Upload::Sips.new :target => @target, :source => @file 
     
   end
 
@@ -39,18 +39,35 @@ describe "Sips" do
   
   describe "dimensions" do
     
-    it "should return a hash with height as a key" do
-      @sips.dimensions.should have_key(:height)
-    end
+    describe "for source" do
+      
+      it "should return a hash with height as a key" do
+        @sips.source_dimensions.should have_key(:height)
+      end
     
-    it "should return a hash with width as a key" do
-      @sips.dimensions.should have_key(:width)
+      it "should return a hash with width as a key" do
+        @sips.source_dimensions.should have_key(:width)
+      end
     end
+
+    describe "for target" do
+      
+      it "should return a hash with height as a key" do
+        @sips.target_dimensions.should have_key(:height)
+      end
     
+      it "should return a hash with width as a key" do
+        @sips.target_dimensions.should have_key(:width)
+      end
+      
+    end
   end
 
-  describe "arguments for cropping" do
-    pending
+  describe "cropping" do
+    
+    it "should say that it needs to be cropped" do
+      @target.crop.should be_true
+    end
+    
   end
-  
 end

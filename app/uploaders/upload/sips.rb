@@ -9,6 +9,7 @@ module Upload
     
     
     attr_accessor :target
+    attr_accessor :source
     
     def initialize(args={})
       
@@ -16,12 +17,59 @@ module Upload
       # Target will typically be a Thumbnail/Preview
       # This is so we can ask it for it's target dimensions and cropping information
       @target = args[:target]
+      @source = args[:source]
       
     end
     
-    def dimensions
+    def target_dimensions
+      get_dimensions(target.path)
+    end
+    
+    def source_dimensions
+      get_dimensions(source.path)
+    end
+    
+    # Sips accepts jpeg not jpg as an output format
+    # we want to have .jpg as our file extensions
+    def format
+      target.format.to_s == 'jpg' ? 'jpeg' : target.format.to_s
+    end
+    
+    # Returns a string with the arguments for creating the desired thumbnail
+    # based on arguments from the modifier (typically a thumbnail)
+    # 
+    # Sips Image modification functions (that we're using)
+    #   -c, --cropToHeightWidth pixelsH pixelsW 
+    #   -z, --resampleHeightWidth pixelsH pixelsW 
+    #       --resampleWidth pixelsW   (will distort to fit)
+    #       --resampleHeight pixelsH  (will distort to fit)
+    #   -Z, --resampleHeightWidthMax pixelsWH (will the longer side up to the supplied value. Scales proportially)
+    # 
+    # Example of sips usage (from command line)
+    #
+    # sips [image modification functions] imagefile ... 
+    #      [--out result-file-or-dir] 
+    # 
+    def to_s
       
-      raise "No path supplied" if self.target.path.nil?
+      out = ['sips']
+      out << resample_arguments
+      out << crop_arguments
+      out << format_arguments
+      out << source_path
+      out << " --out #{target.path}"
+      
+      out.join(' ')
+      
+    end
+
+    
+    private
+    
+    
+    def get_dimensions(path)
+      
+      raise "No path supplied" if path.nil?
       
       # Optionally you can return all of the properties by passing in all
       # eg: --getProperty all
@@ -54,7 +102,7 @@ module Upload
       cmd << '--getProperty pixelWidth'
       cmd << '--getProperty pixelHeight'
 
-      cmd << escape_path(target.path)
+      cmd << escape_path(path)
 
       result = self.class.send(:'`', cmd.join(' '))
       
@@ -64,46 +112,22 @@ module Upload
     end
     
     
-    # Sips accepts jpeg not jpg as an output format
-    # we want to have .jpg as our file extensions
-    def format
-      target.format.to_s == 'jpg' ? 'jpeg' : target.format.to_s
-    end
     
-    # Returns a string with the arguments for creating the desired thumbnail
-    # based on arguments from the modifier (typically a thumbnail)
+    # We don't want to upscale the preview when we create thumbnails
+    # So we check the target dimensions against the source dimensions
     # 
-    # Sips Image modification functions (that we're using)
-    #   -c, --cropToHeightWidth pixelsH pixelsW 
-    #   -z, --resampleHeightWidth pixelsH pixelsW 
-    #       --resampleWidth pixelsW   (will distort to fit)
-    #       --resampleHeight pixelsH  (will distort to fit)
-    #   -Z, --resampleHeightWidthMax pixelsWH (will the longer side up to the supplied value. Scales proportially)
     # 
-    # Example of sips usage (from command line)
-    #
-    # sips [image modification functions] imagefile ... 
-    #      [--out result-file-or-dir] 
     # 
-    def to_s
-      
-      out = "sips #{resample_arguments} #{crop_arguments} #{format_arguments} #{source_path} --out #{target.path}"
-      out
-      # 
-      # Rails.logger.info "\n\nArgument for sips #{out}\n\n"
-      
-      
-    end
-
-    
-    private
+    # horizontal?
+    # make sure source.width is at least the length of the target.width
     
     def resample_arguments
       
       if target.horizontal? || target.square?
         
         method = '--resampleWidth'
-        side = target.crop? ? target.height : target.width
+        
+        side = target.crop? ? [source.height, target.height].min : [source.height, target.width].min
       else      
         method = '--resampleHeight'
         side = target.crop? ? target.width : target.height
@@ -121,9 +145,7 @@ module Upload
     end
     
     def format_arguments
-
       "-s format #{format}"
-      
     end
 
     # Now we'll step through each line of the output from sips.
@@ -161,7 +183,7 @@ module Upload
     end
 
     def source_path
-      escape_path(target.preview.path)
+      escape_path(self.source.path)
     end
     
   end

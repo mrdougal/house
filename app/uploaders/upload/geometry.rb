@@ -65,7 +65,7 @@ module Upload
 
         return unless exists?
         
-        @dimensions ||= Sips.new( :target => self ).dimensions
+        @dimensions ||= Sips.new( :target => self ).target_dimensions
 
       end
       
