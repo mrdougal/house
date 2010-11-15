@@ -4,8 +4,14 @@ require "spec_helper"
 describe "Sips" do
   
   before(:each) do
+
+    @file = File.new(File.join(Rails.root, 'spec/fixtures/assets/previews/438x800.png' ))
+
     @target = Factory(:thumb)
+    @target.stub(:path).and_return @file.path
+
     @sips = Upload::Sips.new :target => @target
+    
   end
 
   describe "format" do
@@ -31,9 +37,16 @@ describe "Sips" do
 
   end
   
-  
-  it "should know the dimensions of a file" do
-    pending
+  describe "dimensions" do
+    
+    it "should return a hash with height as a key" do
+      @sips.dimensions.should have_key(:height)
+    end
+    
+    it "should return a hash with width as a key" do
+      @sips.dimensions.should have_key(:width)
+    end
+    
   end
 
   describe "arguments for cropping" do

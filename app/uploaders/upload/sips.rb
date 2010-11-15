@@ -14,9 +14,8 @@ module Upload
       
 
       # Target will typically be a Thumbnail/Preview
-      # This is so we can ask it for it's target dimensions, cropping information
+      # This is so we can ask it for it's target dimensions and cropping information
       @target = args[:target]
-      # @path   = args[:target].path
       
     end
     
@@ -73,12 +72,60 @@ module Upload
     
     # Returns a string with the arguments for creating the desired thumbnail
     # based on arguments from the modifier (typically a thumbnail)
+    # 
+    # Sips Image modification functions (that we're using)
+    #   -c, --cropToHeightWidth pixelsH pixelsW 
+    #   -z, --resampleHeightWidth pixelsH pixelsW 
+    #       --resampleWidth pixelsW   (will distort to fit)
+    #       --resampleHeight pixelsH  (will distort to fit)
+    #   -Z, --resampleHeightWidthMax pixelsWH (will the longer side up to the supplied value. Scales proportially)
+    # 
+    # Example of sips usage (from command line)
+    #
+    # sips [image modification functions] imagefile ... 
+    #      [--out result-file-or-dir] 
+    # 
     def to_s
       
+      out = "sips #{resample_arguments} #{crop_arguments} #{format_arguments} #{source_path} --out #{target.path}"
+      out
+      # 
+      # Rails.logger.info "\n\nArgument for sips #{out}\n\n"
+      
+      
     end
+
     
     private
     
+    def resample_arguments
+      
+      if target.horizontal? || target.square?
+        
+        method = '--resampleWidth'
+        side = target.crop? ? target.height : target.width
+      else      
+        method = '--resampleHeight'
+        side = target.crop? ? target.width : target.height
+      end
+      
+      "#{method} #{side} "
+      
+    end
+
+    def crop_arguments
+      
+      if self.target.crop?
+        "--cropToHeightWidth #{target.dimensions[:height]} #{target.dimensions[:width]}"
+      end
+    end
+    
+    def format_arguments
+
+      "-s format #{format}"
+      
+    end
+
     # Now we'll step through each line of the output from sips.
     # Example of typical output from sips...
     # 
@@ -112,10 +159,10 @@ module Upload
       out
       
     end
-    
-    
-    
-    
+
+    def source_path
+      escape_path(target.preview.path)
+    end
     
   end
   

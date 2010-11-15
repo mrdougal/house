@@ -5,6 +5,7 @@ class Thumbnail
   
   include Upload::Common
   include Upload::CommandLine
+  include Upload::Geometry
   
   attr_accessor :parent, :name, :config, :format, :dimensions, :crop
   attr_writer :crop
@@ -21,8 +22,10 @@ class Thumbnail
       
       self.dimensions = self.config[:dimensions]
       self.format     = self.config[:format]   
+      self.crop       = self.config[:crop]
     end
 
+    self.crop       = false if self.crop.nil?
     self.format     = :png if self.format.nil?
 
     
@@ -55,19 +58,6 @@ class Thumbnail
   # * We know that the 'preview' will always be in a format that SIPS can process (png or jpeg)
   # * Is installed on *all* macs (doesn't need dev tools installed)
   # 
-  # 
-  # Sips Image modification functions (that we're using)
-  #   -c, --cropToHeightWidth pixelsH pixelsW 
-  #   -z, --resampleHeightWidth pixelsH pixelsW 
-  #       --resampleWidth pixelsW   (will distort to fit)
-  #       --resampleHeight pixelsH  (will distort to fit)
-  #   -Z, --resampleHeightWidthMax pixelsWH (will the longer side up to the supplied value. Scales proportially)
-  # 
-  # Example of sips usage (from command line)
-  #
-  # sips [image modification functions] imagefile ... 
-  #      [--out result-file-or-dir] 
-  # 
   def create
     
     # Raise an error, if there is no preview of the asset
@@ -86,10 +76,6 @@ class Thumbnail
   
   alias :save! :create
 
-  def crop
-    @crop
-  end
-  
   def crop?
     self.crop == true
   end
