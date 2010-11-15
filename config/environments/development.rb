@@ -24,7 +24,5 @@ House::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
   
   
-  config.upload_base_path = File.expand_path("#{Rails.root}/../site_uploads")
-  
 end
 

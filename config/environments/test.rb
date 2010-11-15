@@ -35,6 +35,6 @@ House::Application.configure do
   
   
   # Where the uploaded assets are stored
-  config.upload_base_path = File.expand_path("#{Rails.root}/../site_uploads_test")
+  config.upload_base_path = File.expand_path("#{Rails.root}/../site.uploads_test")
   
 end
