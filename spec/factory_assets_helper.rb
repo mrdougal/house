@@ -26,7 +26,7 @@ def get_fixture(n = nil)
   
   # The n will most likely be passed in with a path (or part of one)
   f_name = File.basename(n)
-  f_path = File.join(File.expand_path("#{Rails.root}/spec"), 'fixtures/assets', n)
+  f_path = asset_fixtures_path(n)
 
 
 
@@ -63,7 +63,9 @@ def get_fixture(n = nil)
   
 end
 
-
+def asset_fixtures_path(n = nil)
+  File.join(File.expand_path("#{Rails.root}/spec"), 'fixtures/assets', n)
+end
 
 
   def all_files
