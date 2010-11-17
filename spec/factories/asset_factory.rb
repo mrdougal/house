@@ -29,7 +29,6 @@
     t.dimensions {{ :width => 800, :height => 800 }}
     t.crop   false 
     t.format :jpg
-    # }}
     
   end
   
