@@ -10,11 +10,17 @@ gem "mongoid", "2.0.0.beta.19"
 # gem "bson_ext", "1.0.4"
 
 
+# Metadata stuff
+gem "candle", '0.2.5', :git => 'git://github.com/dougalmacpherson/candle.git' 
+
+
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
+
 
 # To use debugger
 # gem 'ruby-debug'
