@@ -9,31 +9,39 @@ class Metadata
   include Mongoid::Document
   include Candle
   
-  attr_accessor :path, :raw
-
-  before_create :process_metadata
+  embedded_in :asset, :inverse_of => :metadata
+  
+  before_create :extract
 
 
   
+  def extract
+    assign_metadata if extract_metadata
+  end
+  
+  # Method to see if we have any metadata
+  # Checks the raw hash to see if it's empty
   def empty?
-    self.raw.empty?
+    @md.nil? ? true : @md.empty?
+  end
+  
+  private
+
+
+  def extract_metadata
+    
+    @md = get_raw_metadata
+    @md = clean_metadata if @md
   end
   
   
-  
-  
-  
-  
-  
-  private
-  
-
-
-
-  def process_metadata
+  def assign_metadata
     
-    self.raw = get_raw_metadata
-    self.raw = clean_metadata if self.raw
+    return if @md.nil?
+    
+    @md.each_pair do |key, value|
+      self[key] = value
+    end
     
   end
 
@@ -81,8 +89,8 @@ class Metadata
     # }
     # 
     
-    md = Candle::Base.new(path)
-    md.indexed? ? md.metadata : nil
+    raw = Candle::Base.new(asset.path)
+    raw.indexed? ? raw.metadata : nil
     
   end
 
@@ -101,30 +109,43 @@ class Metadata
   # so we'll remove them, and any attributes which are empty 
   def remove_redundant_attributes
     
-    raw.each_pair.each do |k,val|          
-      raw.delete(k) if file_system_attribute?(k) or val.blank?
+    @md.each_pair.each do |key,val|          
+      @md.delete(key) if redundant_attribute?(key) or val.blank?
     end
+    
+  end
+  
+  def redundant_attribute?(key)
+  
+    return true if file_system_attribute?(key) or date_related_attribute?(key)
     
   end
   
   # Does the attribute contain filesytem information?
   # (Which is considered irrelevant)
-  def file_system_attribute?(val)
-    !(val =~ /kMDItemFS*/).nil?        
+  def file_system_attribute?(key)
+    !(key =~ /kMDItemFS*/).nil?        
+  end
+  
+  # Dates relating to creation and modification aren't relevant
+  # (information is tied to filesystem)
+  def date_related_attribute?(key)
+    !(key =~ /Date/).nil?
   end
   
   def humanise_metadata
     
     out = {}
-    self.raw.each_pair do |n, val|
-      
-      n = n.to_s.gsub('kMDItem','').gsub('FS','').underscore   
-      
-      out[n.to_sym] = val
+    @md.each_pair do |key, val|
+      out[humanise_attribute(key).to_sym] = val
     end
     
     out
     
+  end
+  
+  def humanise_attribute(val)
+    val.to_s.gsub('kMDItem','').gsub('FS','').underscore
   end
   
   

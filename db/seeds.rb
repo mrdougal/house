@@ -17,6 +17,8 @@
   all_files.each do |a|
     
     begin
+      
+      puts "creating #{a}"
       Factory :asset, :file => get_fixture(a)
     rescue Exception => e
       

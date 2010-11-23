@@ -1,20 +1,28 @@
 
 <table border="0" cellspacing="0" class="metadata">
+
 	<tr>
 		<td class="name">size</td>
 		<td class="value"><%= number_to_human_size @asset.size %></td>
 	</tr>
 	
+	
+	
+	<% if @asset.metadata? %>
+	
+		<% @asset.metadata.attributes.each_pair do |key, value| %>
+		<tr>
+			<td class="name"><%= key.humanize %></td>
+			<td class="value"><%= value %></td>
+		</tr>
+		<% end %>
+		
+	
+	<% end %>
+
 	<tr>
 		<td class="name">Uploaded</td>
 		<td class="value"><%= time_ago_in_words @asset.created_at %> ago</td>
 	</tr>
 	
-	<% if @asset.preview.exists? %>
-	<tr>
-		<td class="name">Preview created</td>
-		<td class="value"><%= time_ago_in_words @asset.preview_created_at %> ago</td>
-	</tr>
-	
-	<% end %>
 </table>

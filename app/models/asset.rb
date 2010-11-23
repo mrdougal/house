@@ -10,6 +10,9 @@ class Asset
 
   include Upload::Common
   include Upload::Relationships
+  
+
+  embeds_one :metadata
 
   
   field :name
@@ -74,6 +77,9 @@ class Asset
     # Create thumbnails if we can create a preview
     self.thumbnails.create if self.preview.create
     
+    # Attempt to extract metadata
+    self.create_metadata
+    
   end
 
 
@@ -83,6 +89,11 @@ class Asset
     { :id => id,
       :size => size,
       :basename => basename }
+  end
+  
+  
+  def metadata?
+    !!metadata
   end
 
   private
