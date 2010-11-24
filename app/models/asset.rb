@@ -93,9 +93,8 @@ class Asset
   
   # Do we have any usable metadata?
   def metadata?
-    # !!metadata
     
-    metadata and !metadata.empty?
+    metadata ? !metadata.empty? : false
   end
 
   private

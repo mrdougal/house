@@ -1,3 +1,4 @@
+# encoding: UTF-8
 
 # Effectively this class contains the results from querying spotlight
 # Some of the attributes are cleaned prior to importing into the class
@@ -18,9 +19,15 @@ class Metadata
   
   
   # Method to see if we have any metadata
-  # Checks the raw hash to see if it's empty
+  # We are checking to see if there is a content type tree
+  # as all sucessful records will contain this attribute
   def empty?
-    @md.nil? ? true : @md.empty?
+
+    self.content_type_tree.empty?
+    
+    rescue Exception
+      # The method doesn't exist so it must be empty
+      true
   end
   
   private
