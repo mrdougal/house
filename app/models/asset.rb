@@ -91,9 +91,11 @@ class Asset
       :basename => basename }
   end
   
-  
+  # Do we have any usable metadata?
   def metadata?
-    !!metadata
+    # !!metadata
+    
+    metadata and !metadata.empty?
   end
 
   private
