@@ -25,7 +25,7 @@ describe "Creating and Updating Asset" do
       
         it "should be same as the fixture" do
         
-          f = File.join(File.dirname(__FILE__), '../fixtures/assets', val)
+          f = asset_fixtures_path(val)
           @asset.original_filesize.should == File.size(f)
         end
       end

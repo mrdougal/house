@@ -1,7 +1,7 @@
 require "spec_helper"
 
 
-describe "Asset Thumbnails" do
+describe "Thumbnail relationships" do
   
   before(:each) do
     @asset = Factory :processed_asset, :file => get_fixture('images/example.jpg')

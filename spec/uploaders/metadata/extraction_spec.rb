@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Metadata" do
+describe "Metadata Extraction" do
 
   shared_examples_for 'indexed assets' do
     
@@ -254,7 +254,7 @@ describe "Metadata" do
   describe "non-indexed files" do
     
     before(:each) do
-      @asset = Factory :asset, :file => get_fixture('.hidden/example.pdf')
+      @asset = Factory :asset, :file => get_fixture('.hidden/example')
     end
     
     it "should say metadata is empty" do
@@ -265,8 +265,8 @@ describe "Metadata" do
       @asset.should_not be_metadata
     end
 
-    it "shoud be nothing" do
-      @asset.metadata.should == ''
+    it "metadata shoud respond to extract (even if empty)" do
+      @asset.metadata.should respond_to(:extract)
     end
     
   end

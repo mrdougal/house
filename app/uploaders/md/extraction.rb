@@ -1,10 +1,10 @@
+
+# MD::Extraction
+# Methods for extraction and initial cleaning of metadata
+
 module MD
   module Extraction
-    
-    module ClassMethods
-      
-    end
-    
+
     module InstanceMethods
       
       def extract
@@ -73,6 +73,7 @@ module MD
         # }
         # 
 
+        puts "path = #{asset.path}"
         raw = Candle::Base.new(asset.path)
         raw.indexed? ? raw.metadata : nil
 
@@ -141,7 +142,6 @@ module MD
     end
     
     def self.included(receiver)
-      receiver.extend         ClassMethods
       receiver.send :include, InstanceMethods
     end
   end

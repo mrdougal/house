@@ -126,10 +126,10 @@ end
   end
 
   def iwork
-  [ 'example.pages', 
-    'example-08.pages',
-    'example.numbers',
-    'example.key'].collect! {|i| "iwork/#{i}" }
+    [ 'example.pages', 
+      'example-08.pages',
+      'example.numbers',
+      'example.key'].collect! {|i| "iwork/#{i}" }
   end
   
 
