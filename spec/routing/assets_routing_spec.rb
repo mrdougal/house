@@ -88,6 +88,24 @@ describe AssetsController do
       end
       
 
+    end
+    
+    
+    describe "download" do
+
+      it "recognises and generates #download" do
+        { :get => "/assets/1/download" }.should route_to( :controller => "assets",
+                                                          :action => "download",
+                                                          :id => "1")
+      end
+
+
+      it "recognises and generates #download pdf" do
+        { :get => "/assets/1/download.pdf" }.should route_to( :controller => "assets",
+                                                          :action => "download",
+                                                          :id => "1", 
+                                                          :format => "pdf" )
+      end
       
     end
 

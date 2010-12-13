@@ -12,6 +12,9 @@ House::Application.routes.draw do
       get 'medium', :format => 'png' 
       get 'large',  :format => 'jpg' 
       
+      # Download the original asset
+      get 'download'
+      
     end
   end
 

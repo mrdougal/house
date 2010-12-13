@@ -24,4 +24,9 @@
 		<td class="value"><%= time_ago_in_words @asset.created_at %> ago</td>
 	</tr>
 	
+	<tr>
+		<td class="name">Downloaded</td>
+		<td class="value"><%= pluralize @asset.download_count, 'time' %></td>
+	</tr>
+	
 </table>

@@ -21,6 +21,7 @@ class Asset
   field :original_filesize, :type => Integer, :default => 0    # filesize in bytes
   
   field :preview_created_at, :type => DateTime
+  field :download_count, :type => Integer, :default => 0  
   
   validate :check_file
   
@@ -101,6 +102,17 @@ class Asset
     metadata ? !metadata.empty? : false
   end
 
+
+  # Keeps a log if how many times an asset has been downloaded
+  # Currently only keeps a count but this could be expanded
+  def update_download_stats
+    
+    self.download_count ||= 0
+    self.download_count += 1
+
+    save(:validate => false)
+    
+  end
 
   class << self
     

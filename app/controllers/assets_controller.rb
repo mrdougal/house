@@ -167,6 +167,19 @@ class AssetsController < ApplicationController
   
   
   
+  def download
+    
+    
+    # Send the file down the pipe...
+    send_file @asset.path, :status => 200
+    
+    @asset.update_download_stats
+    
+    
+  end
+  
+  
+  
   
   
   private
