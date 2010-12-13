@@ -86,7 +86,7 @@ class Metadata
   # A list of attributes that we don't need to show to the user
   def hidden_attributes
 
-    %w{ display_name content_type_tree content_type }
+    %w{ display_name content_type_tree content_type _id }
     
   end
   
