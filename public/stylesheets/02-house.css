@@ -1,3 +1,9 @@
+/* @override 
+	http://0.0.0.0:3000/stylesheets/02-house.css?1288180420
+	http://0.0.0.0:3000/stylesheets/02-house.css?1292243021
+	http://0.0.0.0:3000/stylesheets/02-house.css?1292243052
+*/
+
 html { background-color: #d2d6db; color: #333;
 	padding: 0;
 	font: 10pt "Lucida Grande", Lucida, Verdana, sans-serif;
@@ -127,6 +133,12 @@ nav a {
 	padding-bottom: 5px;
 }
 
+img.preview {
+	float: left;
+	margin-right: 1em;
+	margin-bottom: 1em;
+}
+
 
 
 /* @end */
@@ -185,36 +197,42 @@ footer {
 }
 
 a.new {
-	background: url(/images/icons/new.png) no-repeat left center;
+	background: url(img/new.png) no-repeat left center;
 }
 
 a.edit {
-	background: url(/images/icons/edit.png) no-repeat left center;
+	background: url(img/edit.png) no-repeat left center;
 }
 
 a.delete {
-	background: url(/images/icons/delete.png) no-repeat left center;
+	background: url(img/delete.png) no-repeat left center;
 }
 
 a.show {
-	background: url(/images/icons/show.png) no-repeat left center;
+	background: url(img/show.png) no-repeat left center;
 }
 
 a.index {
-	background: url(/images/icons/index.png) no-repeat left center;
+	background: url(img/index.png) no-repeat left center;
 }
 
-.account a.show {
-	background: url(/images/icons/account.png) no-repeat left center;
+.crud a.download {
+	color: #fffeff;
+	background-color: #d72516;
+	padding: 0.5em 1em;
+	width: auto;
+	font-size: 12pt;
+	float: left;
+	display: block;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	margin-left: 20px;
 }
 
-.carton a.show {
-	background: url(/images/icons/carton.png) no-repeat left center;
+.crud a.download:hover {
+	background-color: #ff2016;
 }
 
-.bottle a.show {
-	background: url(/images/icons/bottle_small.gif) no-repeat left center;
-}
 
 
 
