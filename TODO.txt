@@ -1,3 +1,5 @@
+Processing of pages documents
+As they are uploaded as zip archives, need to extract them
 
 
 
@@ -46,17 +48,17 @@ Humanising metadata attributes
 
 Assuming the following metadata
 
-Audio channel count			| 2
-Authors						| Band of Horses
-Audio track number			| 1
-Audio bit rate				| 210000
-Audio encoding application 	| iTunes 
-Recording year				| 2007
-Musical genre				| Rock
-Total bit rate				| 210000
-Album						| Cease to Begin
-Media types					| Sound
-Duration seconds			| 61326
+	Audio channel count			| 2
+	Authors						| Band of Horses
+	Audio track number			| 1
+	Audio bit rate				| 210000
+	Audio encoding application 	| iTunes 
+	Recording year				| 2007
+	Musical genre				| Rock
+	Total bit rate				| 210000
+	Album						| Cease to Begin
+	Media types					| Sound
+	Duration seconds			| 61326
 
 
 Attributes need to be grouped based on their "type"
@@ -66,9 +68,8 @@ Audio track number, Audio bit rate and Audio encoding application can loose "aud
 Duration in seconds could become duration
 As we will convert the number into a string representing the duration. eg: 45 seconds
 
-
-
 Grouping related attributes together
+The bit rate and channel count should be grouped together
 Attributes relating to width and height of a page should be displayed together
 
 
