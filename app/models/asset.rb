@@ -101,6 +101,18 @@ class Asset
     metadata ? !metadata.empty? : false
   end
 
+
+  class << self
+    
+    
+    def ordered
+      criteria.order_by(:created_at.desc)
+    end
+    
+  end
+
+
+
   private
   
   def get_original_filename
@@ -110,9 +122,7 @@ class Asset
     
 
     f = @file.respond_to?(:original_filename) ? @file.original_filename : File.basename(@file.path)
-
     f.force_encoding("utf-8")
-    # Rails.logger.info "File = #{f} encoding #{f.encoding.name}"
     
     
   end
