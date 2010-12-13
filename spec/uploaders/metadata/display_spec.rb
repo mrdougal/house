@@ -19,9 +19,16 @@ describe "Metadata Display" do
       
     describe "display of time" do
 
+
+      it "should convert 0.0001 seconds to 1/10,000 secound" do
+        @metadata.duration_seconds = 0.0001
+        @metadata.humanized_attributes['Duration seconds'].should == '1/10,000 second'
+      end
+
+
       it "should convert 0.5 seconds to 0.5 secounds" do
         @metadata.duration_seconds = 0.5
-        @metadata.humanized_attributes['Duration seconds'].should == '0.5 second'
+        @metadata.humanized_attributes['Duration seconds'].should == '1/2 second'
       end
 
       it "should convert 10.5 seconds to 10.5 secounds" do

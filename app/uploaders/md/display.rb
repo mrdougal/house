@@ -46,7 +46,7 @@ module MD
               when key == 'orientation' then value.zero? ? 'landscape' : 'portrait'
 
               # Convert secounds into minutes hours etc
-              when key =~ /duration/ then secounds_to_words(value)
+              when key =~ /seconds/ then secounds_to_words(value)
 
               # Don't convert years
               when key =~ /year/ then value
@@ -90,7 +90,14 @@ module MD
       def secounds_to_words(secs)
 
         case secs
-        when 0..60
+        when 0..1
+          
+          # Convert into a rational number
+          # So that we can display as fractions of a second
+          s = secs.rationalize
+          
+          "#{s.numerator}/#{number_with_delimiter s.denominator} second"
+        when 1..60
           pluralize secs, 'second'
         when 60..3600
 
