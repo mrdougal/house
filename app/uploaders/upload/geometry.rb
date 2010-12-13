@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 module Upload
   module Geometry
     module ClassMethods

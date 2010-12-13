@@ -1,3 +1,4 @@
+# encoding: UTF-8
 
 # 2010-09-27
 # Dougal

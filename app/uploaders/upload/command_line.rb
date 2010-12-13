@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 # To create previews and thumbnails we are jumping out to the shell
 # This module contains methods for pharsing input and output
 

@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class AssetsController < ApplicationController
   
   before_filter :get_asset, :except => [ :index, :new, :create ]

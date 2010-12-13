@@ -1,3 +1,4 @@
+# encoding: UTF-8
 
 
 # 2010-09-24
@@ -132,5 +133,12 @@ end
       'example.key'].collect! {|i| "iwork/#{i}" }
   end
   
+  
+  def odd_filenames
+    [ 'bacon and ham.txt', 
+      'bacon".txt',
+      'bacon:ham.txt',
+      '†est.txt'].collect! {|i| "odd-filenames/#{i}" }
+  end
 
 

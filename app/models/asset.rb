@@ -1,3 +1,4 @@
+# encoding: UTF-8
 
 # 2010-09-22
 # Looks after files within the system
@@ -48,7 +49,10 @@ class Asset
     
     # Set the size and filename of the uploaded file
     self.original_filesize = get_filesize
-    self.original_filename = get_original_filename
+    
+    # Encode the result as a utf-8 string
+    self.original_filename =  get_original_filename
+    
   
   end
   
@@ -104,7 +108,13 @@ class Asset
     # If file hasn't been set return nil
     return nil unless file?
     
-    @file.respond_to?(:original_filename) ? @file.original_filename : File.basename(@file.path)
+
+    f = @file.respond_to?(:original_filename) ? @file.original_filename : File.basename(@file.path)
+
+    f.force_encoding("utf-8")
+    # Rails.logger.info "File = #{f} encoding #{f.encoding.name}"
+    
+    
   end
 
   def get_filesize

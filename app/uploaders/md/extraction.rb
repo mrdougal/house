@@ -1,3 +1,4 @@
+# encoding: UTF-8
 
 # MD::Extraction
 # Methods for extraction and initial cleaning of metadata
@@ -73,7 +74,6 @@ module MD
         # }
         # 
 
-        puts "path = #{asset.path}"
         raw = Candle::Base.new(asset.path)
         raw.indexed? ? raw.metadata : nil
 
@@ -94,10 +94,9 @@ module MD
       # so we'll remove them, and any attributes which are empty 
       def remove_redundant_attributes
 
-        @md.each_pair.each do |key,val|          
+        @md.each_pair.each do |key,val|
           @md.delete(key) if redundant_attribute?(key) or val.blank?
         end
-
       end
 
       def redundant_attribute?(key)

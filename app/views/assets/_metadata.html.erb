@@ -7,12 +7,11 @@
 	</tr>
 	
 	
-	
 	<% if @asset.metadata? %>
 	
-		<% @asset.metadata.attributes.each_pair do |key, value| %>
+		<% @asset.metadata.humanized_attributes.each_pair do |key, value| %>
 		<tr>
-			<td class="name"><%= key.humanize %></td>
+			<td class="name"><%= key %></td>
 			<td class="value"><%= value %></td>
 		</tr>
 		<% end %>

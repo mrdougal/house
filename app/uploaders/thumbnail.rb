@@ -1,3 +1,4 @@
+# encoding: UTF-8
 
 # This class represents the files that are produced via sips
 

@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 module Upload
   
   # Methods for talking to sips

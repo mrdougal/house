@@ -1,3 +1,4 @@
+# encoding: UTF-8
 
 # This class represents the file that is produced from clipper
 # When the parent asset is created there will also be a preview model available

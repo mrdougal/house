@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 
 # MD::Display
 # Methods to help with display of asset metadata
