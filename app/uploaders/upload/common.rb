@@ -47,6 +47,11 @@ module Upload
       end
       
       
+      def basepath
+        File.expand_path File.join(upload_base_path, parent_class_name, id_partition)
+      end
+      
+      
       # The path to our asset on the filesystem.
       # Note that the path is split along many directories. 
       # This is so that we don't have many files stored in one directory

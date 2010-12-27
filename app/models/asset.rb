@@ -29,6 +29,8 @@ class Asset
   # Callbacks
   after_create :store!
   after_create :process!
+  
+  after_destroy :delete_files
 
 
   # Why not have a name method to display the name (if set), or display the basename?
@@ -78,6 +80,10 @@ class Asset
   # Typically 'process!' will be called outside outside 
   # of the request responce cycle eg: via delayed job
   def process!
+    
+    
+    # If we have an archive extract it
+    # Some files mainly iWork docs are automatically zipped by the browser
     
     # Create thumbnails if we can create a preview
     self.thumbnails.create if self.preview.create
@@ -201,6 +207,14 @@ class Asset
     # Re-assign file
     self.file = File.new(path)
     
+  end
+
+
+  # We'll remove the files by removing the parent directory
+  # Called from the after destroy callback
+  def delete_files
+
+    FileUtils.remove_dir self.basepath
   end
 
 end
