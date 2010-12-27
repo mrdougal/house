@@ -214,7 +214,9 @@ class Asset
   # Called from the after destroy callback
   def delete_files
 
-    FileUtils.remove_dir self.basepath
+    # Adding true to force the removal
+    # So if the directory doesn't exist we ignore
+    FileUtils.remove_dir self.basepath, true
   end
 
 end
