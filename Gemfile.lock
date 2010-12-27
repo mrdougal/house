@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/dougalmacpherson/candle.git
-  revision: aa4bc808813a319a3adf44361306ed8d50cd8a3e
+  revision: 98196462827ef5d6ce4acde8b389ace3162dfd36
   specs:
-    candle (0.2.8)
+    candle (0.2.9)
       rake-compiler
 
 GEM
@@ -79,8 +79,8 @@ GEM
       rake (>= 0.8.4)
       thor (~> 0.14.0)
     rake (0.8.7)
-    rake-compiler (0.7.1)
-      rake (>= 0.8.3, < 0.9)
+    rake-compiler (0.7.5)
+      rake
     rspec (2.0.0)
       rspec-core (= 2.0.0)
       rspec-expectations (= 2.0.0)
@@ -103,7 +103,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  candle (= 0.2.8)!
+  candle (= 0.2.9)!
   factory_girl_rails
   mongoid (= 2.0.0.beta.19)
   rails (= 3.0.0)
