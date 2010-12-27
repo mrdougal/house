@@ -35,10 +35,16 @@ module Upload
       # Returns the id of the instance in a split path form. e.g. returns
       # 4c30/0ae9/a2d8/e1b2/4400/0002 for an id of 4c300ae9a2d8e1b244000002
       def id_partition
+        
+        val     = parent_id.to_s
 
-        val                = parent_id
-        val                = (val.length < 9) ? ("%09d" % val ) : val
-        val.scan(/(....)/).join("/")
+        time    = val[0...7]
+        machine = val[8 ...14]
+        pid     = val[15...19]
+        inc     = val[20..25]
+        
+        [time, machine, pid, inc]
+
       end
       
       # See if the file exists on the filesystem
@@ -60,7 +66,7 @@ module Upload
       # This will return a path to where the file should be
       # regardless to weither the file exists or not
       def path
-        File.expand_path File.join(upload_base_path, parent_class_name, id_partition, version_dir, basename)
+        File.expand_path File.join(basepath, version_dir, basename)
       end
 
       # A shortcut method, where we call the parent id and then to s

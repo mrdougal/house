@@ -34,5 +34,21 @@ describe "Storage of the file" do
   end
   
   
+  describe "folder structure/heriarchy based on the mongoid" do
+    
+    # [ 0 1 2 3 ] [ 4 5 6 ] [7 8] [ 9 10 11]
+    # time         machine   pid   inc
+    
+    before(:each) do
+      @path = @asset.id_partition
+    end
+    
+    it "should have 4 parts" do
+      @asset.id_partition.size.should == 4
+    end
+    
+    
+  end
+  
   
 end
