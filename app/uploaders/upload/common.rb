@@ -38,10 +38,12 @@ module Upload
         
         val     = parent_id.to_s
 
-        time    = val[0...7]
-        machine = val[8 ...14]
-        pid     = val[15...19]
-        inc     = val[20..25]
+        time    = val[0..7]
+        machine = val[8..13]
+        pid     = val[14..17]
+        inc     = val[18..23]
+        
+        # 000001
         
         [time, machine, pid, inc]
 

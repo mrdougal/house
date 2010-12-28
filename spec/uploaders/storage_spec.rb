@@ -43,8 +43,33 @@ describe "Storage of the file" do
       @path = @asset.id_partition
     end
     
+    it "should have 24 chars from id string" do
+      @asset.id.to_s.size.should == 24
+    end
+    
     it "should have 4 parts" do
       @asset.id_partition.size.should == 4
+    end
+    
+    it "should have 24 chars in total" do
+      @asset.id_partition.join.size.should == 24
+    end
+
+    
+    it "part 1 should have 8 characters" do
+      @asset.id_partition[0].size.should == 8
+    end
+
+    it "part 2 should have 8 characters" do
+      @asset.id_partition[1].size.should == 6
+    end
+
+    it "part 3 should have 4 characters" do
+      @asset.id_partition[2].size.should == 4
+    end
+
+    it "part 4 should have 6 characters" do
+      @asset.id_partition[3].size.should == 6
     end
     
     
