@@ -1,0 +1,33 @@
+
+Uploaded files
+
+
+Files are uploaded into "house" via http or https or ssh.
+
+
+
+h2. Handing of archives
+
+When archived files are uploaded, the user will need to be prompted if they want to extract the contents of the archive.
+
+
+h4. iWork
+
+iWork 08 documents are stored as a package. So to most browsers they appear as a directory.
+Recent revisions of Safari will automatically zip iWork 08 docs prior to uploading.
+
+This is from the iwork08? method
+
+iWork 09 docs are naturally a zip archive, and don't present an issue with uploading by browsers. Although their content type tree (metadata) will say that they're an archive. We *don't* want to extract these documents.
+
+See "spotlight behaviour.pdf" for more detail on the metadata returned by various media types.
+
+
+
+h2. Storage on filesystem
+
+The path to uploaded documents is fragmented across multiple directories. This is so that we don't exceed the magical number of too many documents in one directory. Where the finder becomes very sluggish or at worse case the filesystem crashs, and none of the tools to modify the filesystem work. ie: rm ls etc
+
+
+
+

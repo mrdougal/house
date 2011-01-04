@@ -1,0 +1,39 @@
+
+<table border="0" cellspacing="0" class="metadata">
+
+	<tr>
+		<td class="name">Size</td>
+		<td class="value"><%= number_to_human_size @asset.size %></td>
+	</tr>
+	
+	
+	<% if @asset.metadata? %>
+	
+		<% @asset.metadata.humanized_attributes.each_pair do |key, value| %>
+		<tr>
+			<td class="name"><%= key %></td>
+			<td class="value"><%= value %></td>
+		</tr>
+		<% end %>
+		
+	
+	<% end %>
+
+	<tr>
+		<td class="name">Uploaded</td>
+		<td class="value"><%= time_ago_in_words @asset.created_at %> ago</td>
+	</tr>
+	
+	<% unless @asset.download_count.zero? %>
+	
+	<tr>
+		<td class="name">Downloaded</td>
+		<td class="value"><%= pluralize @asset.download_count, 'time' %></td>
+	</tr>
+	
+	<% end %>
+	
+</table>
+
+
+<%= debug @asset.metadata.attributes if @asset.metadata? %>

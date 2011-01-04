@@ -1,6 +1,13 @@
-<h1>Editing asset</h1>
 
-<%= render 'form' %>
+<%= asset_image_tag @asset, :large %>
 
-<%= link_to 'Show', @asset %> |
-<%= link_to 'Back', assets_path %>
+
+
+
+<% content_for :side do %>
+
+	<%= render 'metadata' %>
+	<%= render 'form' %>
+	<%= render 'crud' %>
+
+<% end %>

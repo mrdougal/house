@@ -1,8 +1,16 @@
-<p id="notice"><%= notice %></p>
+<% title @asset %>
+<%= asset_image_tag @asset, :preview %>
 
 
 
-<%= debug @asset %>
 
-<%= link_to 'Edit', edit_asset_path(@asset) %> |
-<%= link_to 'Back', assets_path %>
+<% content_for :side do %>
+
+
+<h1><%= @asset %></h1>
+
+<%= render 'metadata' %>
+<%= render 'crud' %>
+
+
+<% end %>

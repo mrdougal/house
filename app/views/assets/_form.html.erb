@@ -10,10 +10,22 @@
       </ul>
     </div>
   <% end %>
+	
+	<div class="fields">
+		
+		<%= f.label :name %>
+		<%= f.text_field :name %>
+	
+		<%= f.label :file %>
+		<%= f.file_field :file %>
+		
+	</div>
+
 
   <div class="actions">
 	
-	<%= f.file_field :file %>
     <%= f.submit %>
+	<!-- reset link to go in here -->
+
   </div>
 <% end %>

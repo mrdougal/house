@@ -6,9 +6,13 @@ gem 'rails', '3.0.0'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # We are using MongoDB for our database and MongoID as our ORM
-# Need to make sure that mongo and bson are the same
 gem "mongoid", "2.0.0.beta.19"
-gem "bson_ext" #, "1.0.4"
+# gem "bson_ext", "1.0.4"
+
+
+# Metadata stuff
+gem "candle", '0.2.10', :git => 'git://github.com/dougalmacpherson/candle.git' 
+
 
 
 # Use unicorn as the web server
@@ -16,6 +20,7 @@ gem "bson_ext" #, "1.0.4"
 
 # Deploy with Capistrano
 # gem 'capistrano'
+
 
 # To use debugger
 # gem 'ruby-debug'

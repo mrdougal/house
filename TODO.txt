@@ -1,0 +1,82 @@
+Processing of pages documents
+As they are uploaded as zip archives, need to extract them
+
+
+
+Add in a run command for calling external commands
+mainly
+
+* unzip : for archives
+* clipper : for previews
+* sips : for thumbnails
+
+Need to check the exit codes for the above processes
+
+
+2010-11-02
+Site wide configuration for...
+* location of assets (eg: outside of the webserver root)
+* size and format of thumbnails (eg: gif or png)
+
+
+All of these utilities should be installed in a location visible to the app (Rails.root)
+
+
+
+Callbacks for asset
+
+after_save
+	- copy to filesystem
+	
+before_process
+	- extract_archive! (archive)
+
+process
+	- extract_metadata
+	- extract_preview
+	- create_thumbnail
+	
+after_process
+	- notify?
+	
+	
+	
+	
+2010-12-13
+Humanising metadata attributes
+
+
+Assuming the following metadata
+
+	Audio channel count			| 2
+	Authors						| Band of Horses
+	Audio track number			| 1
+	Audio bit rate				| 210000
+	Audio encoding application 	| iTunes 
+	Recording year				| 2007
+	Musical genre				| Rock
+	Total bit rate				| 210000
+	Album						| Cease to Begin
+	Media types					| Sound
+	Duration seconds			| 61326
+
+
+Attributes need to be grouped based on their "type"
+
+Change the name of the attribute
+Audio track number, Audio bit rate and Audio encoding application can loose "audio" from the start of their names. 
+Duration in seconds could become duration
+As we will convert the number into a string representing the duration. eg: 45 seconds
+
+Grouping related attributes together
+The bit rate and channel count should be grouped together
+Attributes relating to width and height of a page should be displayed together
+
+
+(This will change based on the format)
+
+
+
+
+
+

@@ -1,7 +1,22 @@
 House::Application.routes.draw do
 
 
-  resources :assets
+  resources :assets do
+    member do
+      
+      # By default the preview is a png file
+      get 'preview', :format => 'png'
+
+      # Thumbnails, please note the formats
+      get 'small',  :format => 'png' 
+      get 'medium', :format => 'png' 
+      get 'large',  :format => 'jpg' 
+      
+      # Download the original asset
+      get 'download'
+      
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -52,7 +67,7 @@ House::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => "welcome#index"
+  root :to => "assets#index"
 
   # See how all your routes lay out with "rake routes"
 

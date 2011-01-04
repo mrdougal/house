@@ -1,0 +1,21 @@
+
+h1. Tell him he's dream'n
+
+
+A list of possibilities that could be done to house to make it better
+
+h2. Uploads via SSH?
+
+2010-09-23
+
+Uploads via ssh will be quicker and potentially secure. (if that is an issue)
+We can then setup dropbox's for users to send files into "house"
+This may need additional client software. (aka Dropbox client)
+
+If there was a house client (insert witty name here) we can have tools to export files and work on them on their local machine. Changes to the files would be automatically sent back to house. 
+via tools such a rsync and fsvent
+
+This would remove the issue of having to manually update assets in the system
+
+Cons would be that you'd need a *nix machine to run the client on. (ssh isn't part of windows)
+Since most clients for house are going to be design agencies this wouldn't be an issue at first 
