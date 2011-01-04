@@ -11,6 +11,8 @@ class AssetsController < ApplicationController
   # GET /assets
   # GET /assets.xml
   def index
+    
+    @asset = Asset.new
     @assets = Asset.ordered
 
     respond_to do |format|
@@ -22,6 +24,9 @@ class AssetsController < ApplicationController
   # GET /assets/1
   # GET /assets/1.xml
   def show
+    
+    
+    @asset.create_metadata unless @asset.metadata?
 
     respond_to do |format|
       format.html # show.html.erb
