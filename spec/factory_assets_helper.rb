@@ -74,7 +74,8 @@ end
       composite,
       videos, fonts, 
       archives,
-      office, iwork ].flatten
+      office, 
+      iwork, uploaded_08_iwork_docs ].flatten
   end
 
 
@@ -131,6 +132,14 @@ end
       'example-08.pages',
       'example.numbers',
       'example.key'].collect! {|i| "iwork/#{i}" }
+  end
+  
+  
+  def uploaded_08_iwork_docs
+    [ 'example-08.pages.zip', 
+      'example-08.numbers.zip',
+      'example-08.key.zip'].collect! {|i| "iwork/uploaded-08-docs/#{i}" }
+    
   end
   
   

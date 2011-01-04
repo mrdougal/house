@@ -11,7 +11,7 @@ gem "mongoid", "2.0.0.beta.19"
 
 
 # Metadata stuff
-gem "candle", '0.2.9', :git => 'git://github.com/dougalmacpherson/candle.git' 
+gem "candle", '0.2.10', :git => 'git://github.com/dougalmacpherson/candle.git' 
 
 
 
