@@ -38,8 +38,9 @@ module Upload
       # If the preview has been generated we can then attempt to create thumbnails
       # Otherwise we will get errors in trying to generate thumbnails from a file
       # that doesn't exist
-      def has_preview?
-        !!preview_generated_at
+      def preview?
+        
+        self.preview ? File.exists?(self.preview.path) : false
       end
 
 
